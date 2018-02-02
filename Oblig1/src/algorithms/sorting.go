@@ -3,7 +3,12 @@ package algorithms
 // Les https://en.wikipedia.org/wiki/Bubble_sort
 func Bubble_sort_modified(list []int) {
 
-	// Skriv din kode her
+	// Declares 'n' as the length of the list
+	n := len(list)
+	// Iterate through list if there is more space, AND if the list has more space
+	for i := 0; i < n && i < n-1; i++ {
+
+	}
 
 
 }
