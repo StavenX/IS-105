@@ -89,8 +89,13 @@ Binary|Hexadeximal|Decimal
 ### - oppg C:
 
 ## Oppgave 3: Forstå prosessadministrasjon på et platform
+Selve loopen ligger i 'IS-105_obOppg_1/blob/master/Oblig1/src/algorithms/systemLoop.go', og heter main.
+Vi fant en gjennomsnittlig 41% økning i CPU-bruk etter start av loopen.
+
+Dette er Task-Manager statistikk før vi startet den uendelige loopen
 ![task manager statistikk](https://raw.githubusercontent.com/StavenX/IS-105_obOppg_1/master/images/status_idle.png "CPU før man starter loop")
 
+Dette er Task-Manager statistikk etter vi startet den uendelige loopen
 ![task manager statistikk](https://raw.githubusercontent.com/StavenX/IS-105_obOppg_1/master/images/status_running.png "CPU etter man starter loop")
 
 ## Oppgave 4: Typografiske symboler
