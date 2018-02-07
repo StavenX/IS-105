@@ -57,6 +57,9 @@ Binary|Hexadeximal|Decimal
 	Måten man går fra desimal til binær er å trekke fra nærmeste, og laveste verdien i totallsystemet. Deretter krysser man '1' hvis dette går,
 	og går til verdien man har igjen etter første regnestykke. Deretter gjør man samme prosess (krysser av 0 hvis det ikke går opp), helt til man
 	får en rekke av '1'er og '0'er.
+	Eksempel: 
+
+	SKRIV EKSEMPEL HER
 ----------------------------------------------------------------------------------------------------------
 
 
@@ -81,31 +84,9 @@ Binary|Hexadeximal|Decimal
 ----------------------------------------------------------------------------------------------------------
 
 ## Oppgave 2: Forstå algoritmer og utføre "benchmark"-tester på koden
-
 ### - oppg A:
-	
+### - oppg B:
+### - oppg C:
 
-Titallsystem
-123456 //10
+## Oppgave 3: Forstå prosessadministrasjon på et platform
 
-1 * 10^5
-2 * 10^4
-3 * 10^3
-4 * 10^2
-5 * 10^1
-6 * 10^0
-
-Binær til desimaltall 
-
-For å 
-110010110 //2
-
-1 * 2^8
-1 * 2^7
-0 * 2^6
-0 * 2^5
-1 * 2^4
-0 * 2^3
-1 * 2^2
-1 * 2^1
-1 * 2^0
