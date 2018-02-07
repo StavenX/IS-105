@@ -84,8 +84,8 @@ Binary|Hexadeximal|Decimal
 ----------------------------------------------------------------------------------------------------------
 
 ## Oppgave 2: Forstå algoritmer og utføre "benchmark"-tester på koden
-### - oppg A: Modifisert Bubble-sort funksjon ligger i 'IS-105_obOppg_1/blob/master/Oblig1/src/algorithms/sorting.go'.
-Den heter Bubble_sort_modified.
+### - oppg A: 
+Modifisert Bubble-sort funksjon ligger i 'IS-105_obOppg_1/blob/master/Oblig1/src/algorithms/sorting.go', og heter Bubble_sort_modified.
 ### - oppg B:
 ### - oppg C:
 
