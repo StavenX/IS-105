@@ -1,27 +1,17 @@
 package algorithms
 
-import ("math/rand"
-"testing"
-"time")
+import (
+	"math/rand"
+	"testing"
+	"time"
+)
 
+// https://golang.org/doc/effective_go.html#init
 func init() {
 	seed := time.Now().Unix()
 	rand.Seed(seed)
 }
-func Bubble_sort_modified(list []int) {
-	n := len(list) -1
-	for {
-		if n == 0 {
-			break
-		}
-		for i := 0; i < len(list) - 1; i++ {
-			if list[i] > list[i+1] {
-				list[i], list[i+1] = list[i+1], list[i]
-			}
-		}
-		n -= 1
-	}
-}
+
 func perm(n int) (out []int) {
 	for _, v := range rand.Perm(n) {
 		out = append(out, v)
@@ -51,3 +41,5 @@ func benchmarkBSortModified(i int, b *testing.B){
 		Bubble_sort_modified(values)
 	}
 }
+
+
