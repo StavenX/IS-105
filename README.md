@@ -4,7 +4,7 @@ IS-105 @V2018
 # Malgo | Obligatorisk oppgave 1
 
 ## Oppgave 1: Fyll ut manglende tall i tabell
-------------|--------------
+
 		Tabell
 Binary|Hexadeximal|Decimal
 ---|---|---
