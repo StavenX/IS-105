@@ -63,9 +63,7 @@ Binary|Hexadeximal|Decimal
 ----------------------------------------------------------------------------------------------------------
 
 
-### - oppg B: 
-
-	Måten man går fra hexadesimale tall til desimal
+### - oppg B: Måten man går fra hexadesimale tall til desimal
 ----------------------------------------------------------------------------------------------------------
 	DESIMAL TIL HEX
 	Man tar desimaltallet og deler det på 16, så setter man det foran kommaet på desimaltallet man får til siden. 
