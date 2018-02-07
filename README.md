@@ -89,9 +89,9 @@ Binary|Hexadeximal|Decimal
 ### - oppg C:
 
 ## Oppgave 3: Forstå prosessadministrasjon på et platform
-![task manager statistikk](https://raw.githubusercontent.com/StavenX/IS-105_obOppg_1/master/images/status_idle "CPU før man starter loop")
+![task manager statistikk](https://raw.githubusercontent.com/StavenX/IS-105_obOppg_1/master/images/status_idle.png "CPU før man starter loop")
 
-![task manager statistikk](https://raw.githubusercontent.com/StavenX/IS-105_obOppg_1/master/images/status_running "CPU etter man starter loop")
+![task manager statistikk](https://raw.githubusercontent.com/StavenX/IS-105_obOppg_1/master/images/status_running.png "CPU etter man starter loop")
 
 ## Oppgave 4: Typografiske symboler
 ### - oppg A:
