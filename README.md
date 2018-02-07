@@ -1,7 +1,5 @@
-# IS-105_obOppg_1
+# MalGO | Obligatorisk oppgave 1
 IS-105 @V2018
-
-# Malgo | Obligatorisk oppgave 1
 
 ## Oppgave 1: Fyll ut manglende tall i tabell
 
