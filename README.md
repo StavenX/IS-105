@@ -86,11 +86,14 @@ Binary|Hexadeximal|Decimal
 ## Oppgave 2: Forstå algoritmer og utføre "benchmark"-tester på koden
 ### - oppg A: 
 Modifisert Bubble-sort funksjon ligger i 'IS-105_obOppg_1/blob/master/Oblig1/src/algorithms/sorting.go', og heter Bubble_sort_modified.
-### - oppg B:
+### - oppg B: 
+Benchmark testene ligger i 'IS-105_obOppg_1/blob/master/Oblig1/src/algorithms/sortingtest.go', og bruker 'benchmarkBSortModified'. De andre benchmarktestene er 'BenchmarkMBSort100', 'BenchmarkMBSort1000' og 'BenchmarkMBSort100'.
 ### - oppg C:
+Viser funksjon som er kjørt. 
+![cmd benchmark](https://raw.githubusercontent.com/StavenX/IS-105_obOppg_1/master/images/Benchmark-test.png "Benchmark")
 
 ## Oppgave 3: Forstå prosessadministrasjon på et platform
-Selve loopen ligger i 'IS-105_obOppg_1/blob/master/Oblig1/src/algorithms/systemLoop.go', og heter main.
+Selve loopen ligger i 'IS-105_obOppg_1/blob/master/Oblig1/src/loop/systemLoop.go', og heter main.
 Vi fant en gjennomsnittlig 41% økning i CPU-bruk etter start av loopen.
 
 Dette er Task-Manager statistikk før vi startet den uendelige loopen
