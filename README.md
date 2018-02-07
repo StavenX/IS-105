@@ -5,7 +5,6 @@ IS-105 @V2018
 
 ## Oppgave 1: Fyll ut manglende tall i tabell
 
-		Tabell
 Binary|Hexadeximal|Decimal
 ---|---|---
 1101|0xD|13
