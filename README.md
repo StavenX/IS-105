@@ -89,4 +89,10 @@ Binary|Hexadeximal|Decimal
 ### - oppg C:
 
 ## Oppgave 3: Forstå prosessadministrasjon på et platform
+![task manager statistikk](https://raw.githubusercontent.com/StavenX/IS-105_obOppg_1/master/images/2018-02-06.png"LogoTitleText 1")
+
+## Oppgave 3: Typografiske symboler
+### - oppg A:
+### - oppg B:
+### - oppg C:
 
