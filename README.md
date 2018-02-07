@@ -83,6 +83,19 @@ Binary|Hexadeximal|Decimal
 	Deretter tar det man satt til siden tidligere, og deler det på 16.
 	Man gjør denne prosessen helt til det foran kommaet er '0'. Ta da det siste sifferet bak komma, og gang det med 16.
 	Dette er det siste hexadesimalet.
+  Eksempel:
+	2034
+
+	2034 / 16 = 127.125
+	0.125 * 16 = 2
+
+	127 / 16 = 7.9375
+	0.9375 * 16 = 15 = F
+
+	7 / 16 = 0.4375
+	0.4375 * 16 = 7
+
+	2034 = 0x2F7
 ----------------------------------------------------------------------------------------------------------
 	HEX TIL DESIMAL
 	Først tar man hex-verdien (f.eks 0xDEA) og gjør desimaltall. Deretter ganger man tallet med 16 (pga hex er sekstentallsystem),
