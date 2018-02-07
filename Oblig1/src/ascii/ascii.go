@@ -9,7 +9,9 @@ func main() {
 	for i:=128; i < 256; i++ {
 		IterateOverASCIIStringLiteral(i)
 	}
-	ExtendedASCIIText()
+	
+	text := [16]int{ 34, 32, 8364, 32, 247, 32, 190, 32, 100, 111, 108, 108, 97, 114, 32, 34 }
+	ExtendedASCIIText(text)
 }
 
 func IterateOverASCIIStringLiteral(i int) {
@@ -21,17 +23,11 @@ func IterateOverASCIIStringLiteral(i int) {
 }
 
 // Kode for Oppgave 2B
-func ExtendedASCIIText() {
-	a := string(34)
-	b := string(32)
-	c := string(8364)
-	d := string(247)
-	e := string(190)
-	f := string(100)
-	g := string(111)
-	h := string(108)
-	i := string(97)
-	j := string(114)
-	everyLetter := a+b+c+b+d+b+e+b+f+g+h+h+i+j+b+a
+func ExtendedASCIIText(text [16]int) {
+	var everyLetter string
+	for i := 0; i < len(text); i++ {
+		everyLetter += string(text[i])
+	}
+
 	fmt.Printf("%s", everyLetter)
 }
