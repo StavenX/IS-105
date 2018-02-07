@@ -12,14 +12,14 @@ func ExtendedASCIIText() {
 
 // Les https://en.wikipedia.org/wiki/Bubble_sort
 func Bubble_sort_modified(list []int) {
-	end = len(list) -1
+	end := len(list) -1
 	for {
 		if end == 0 {
-		break
+			break
 		}
-	for i := 0; i < len(list) - 1, i++; {
+	for i := 0; i < len(list) - 1; i++ {
 		if list[i] > list[i+1] {
-		list[i], list[i+1] = list[i+1], list[i]
+			list[i], list[i+1] = list[i+1], list[i]
 		}
 	}
 	end -= 1
