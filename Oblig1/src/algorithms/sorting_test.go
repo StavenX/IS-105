@@ -76,3 +76,24 @@ func benchmarkQSort(i int, b *testing.B) {
 		QuickSort(values)
 	}
 }
+
+func BenchmarkMBSort100(b *testing.B) {
+	benchmarkBSortModified(100, b)
+}
+
+func BenchmarkMBSort1000(b *testing.B) {
+	benchmarkBSortModified(1000, b)
+}
+
+func BenchmarkMBSort10000(b *testing.B) {
+	benchmarkBSortModified(10000, b)
+}
+
+func benchmarkBSortModified(i int, b *testing.B){
+	for j := 0; j < b.N; j++ {
+		b.StopTimer()
+		values := perm(i)
+		b.StartTimer()
+		Bubble_sort_modified(values)
+	}
+}
