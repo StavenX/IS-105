@@ -13,11 +13,11 @@ func main() {
 }
 
 func IterateOverASCIIStringLiteral(i int) {
-	h := fmt.Sprintf("%X", i)
-	st := string(i)
-	n := int64(i)
-	bin := strconv.FormatInt(n, 2)
-	fmt.Printf("%s %s %s\n", h, st, bin)
+	toHex := fmt.Sprintf("%X", i)
+	toString := string(i)
+	toInt64 := int64(i)
+	toBinary := strconv.FormatInt(toInt64, 2)
+	fmt.Printf("%s %s %s\n", toHex, toString, toBinary)
 }
 
 // Kode for Oppgave 2B
@@ -32,6 +32,6 @@ func ExtendedASCIIText() {
 	h := string(108)
 	i := string(97)
 	j := string(114)
-	zz := a+b+c+b+d+b+e+b+f+g+h+h+i+j+b+a
-	fmt.Printf("%s", zz)
+	everyLetter := a+b+c+b+d+b+e+b+f+g+h+h+i+j+b+a
+	fmt.Printf("%s", everyLetter)
 }
