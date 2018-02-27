@@ -1,225 +1,126 @@
-<p><span style="font-size: 18pt;"><strong>Intro:</strong></span></p>
-<p>Obligatorisk oppgave er en gruppeoppgave som er en del av mappeinnleveringen og teller mot sluttkarakter.</p>
-<p>Oppgavene skal l&oslash;ses og lastes opp p&aring; Github.<br />Oppgavene skal besvares i en .md (markdown) fil.</p>
+# MalGO | Obligatorisk oppgave 1
+IS-105 @V2018
 
-<h1><strong>1. Fyll ut manglende tall i tabell</strong></h1>
-<table style="width: 687px;" border="1">
-<tbody>
-<tr>
-<td style="width: 265px;">
-<p>Bin&aelig;re tall (mest signifikant bit til venstre</p>
-</td>
-<td style="width: 204px;">
-<p>Hexadesimaltall</p>
-</td>
-<td style="width: 195px;">
-<p>Desimaltall</p>
-</td>
-</tr>
-<tr>
-<td style="width: 265px; text-align: center;">
-<p>1101</p>
-</td>
-<td style="width: 204px; text-align: center;">
-<p>0xD</p>
-</td>
-<td style="width: 195px; text-align: center;">
-<p>13</p>
-</td>
-</tr>
-<tr>
-<td style="width: 265px; text-align: center;">
-<p>110111101010</p>
-</td>
-<td style="width: 204px; text-align: center;">
-<p>&nbsp;</p>
-</td>
-<td style="width: 195px; text-align: center;">
-<p>&nbsp;</p>
-</td>
-</tr>
-<tr>
-<td style="width: 265px; text-align: center;">
-<p>&nbsp;</p>
-</td>
-<td style="width: 204px; text-align: center;">
-<p>0xAF34</p>
-</td>
-<td style="width: 195px; text-align: center;">
-<p>&nbsp;</p>
-</td>
-</tr>
-<tr>
-<td style="width: 265px; text-align: center;">
-<p>&nbsp;</p>
-</td>
-<td style="width: 204px; text-align: center;">
-<p>&nbsp;</p>
-</td>
-<td style="width: 195px; text-align: center;">
-<p>65535</p>
-</td>
-</tr>
-<tr>
-<td style="width: 265px; text-align: center;">
-<p>&nbsp;</p>
-</td>
-<td style="width: 204px; text-align: center;">
-<p>&nbsp;</p>
-</td>
-<td style="width: 195px; text-align: center;">
-<p>71562</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h2><span style="font-size: 18pt;"></span></h2>
-<h2><span style="font-size: 18pt;"><strong>Oppgave A</strong></span></h2>
-<p>Beskriv kort metode for &aring; g&aring; fra bin&aelig;re tall til hexadesimale tall og motsatt. Beskriv kort metoden for &aring; g&aring; fra bin&aelig;re tall til desimaltall og motsatt.</p>
-<h2><span style="font-size: 18pt;"><strong>Oppgave B</strong></span></h2>
-<p>Beskriv kort metoden for &aring; g&aring; fra hexadesimale tall til desimaltall og motsatt.</p>
-<p>&nbsp;</p>
-<h1><strong>2. Forst&aring; algoritmer og utf&oslash;re &ldquo;benchmark&rdquo;-tester p&aring; koden</strong></h1>
-<p>Programmeringsoppgave: - ta utgangspunkt i pakken algorithms i oblig1</p>
-<h2><span style="font-size: 18pt;"><strong>Oppgave A</strong></span></h2>
-<p>Skriv en modifisert bubble-sort funksjon benchmarkBSortModified basert p&aring; eksempel-funksjon Bubble_sort i filen sorting.go (se for tips)</p>
-<h2><span style="font-size: 18pt;"><strong>Oppgave&nbsp;B</strong></span></h2>
-<p>Skriv "benchmark"-tester for benchmarkBSortModified funksjonen basert p&aring; eksempel-funksjon benchmarkBSort i filen go</p>
-<h2><span style="font-size: 18pt;"><strong>Oppgave C</strong></span></h2>
-<p>Det finnes ogs&aring; en implementasjon av Quicksort algoritme i sorting.go og tilsvarende implementasjon av tester i go; utf&oslash;r alle benchmark- testene med kommando &ldquo;go test -bench=.&rdquo; og presenter resultatene grafisk</p>
-<p>Hva kan du si om big-O for alle 3 algoritmene, som du har testet?</p>
-<p>&nbsp;</p>
-<p><em>Ressurser:</em></p>
-<p><em>Bubble sort: <a href="https://en.wikipedia.org/wiki/Bubble_sort">https://en.wikipedia.org/wiki/Bubble_sort</a></em></p>
-<p><em>Big-O <a href="http://bigocheatsheet.com">http://bigocheatsheet.com</a> &nbsp;</em></p>
-<p>&nbsp;</p>
-<h1><strong>3. Forst&aring; prosessadministrajon p&aring; et platform</strong></h1>
-<p>Skriv et program som best&aring;r av en evig l&oslash;kke. Hvor mye minne og CPU bruker programmet n&aring;r det kj&oslash;rer. Programmet skal skrive ut en avslutningsmeld- ing n&aring;r programmet mottar et SIGINT signal. Generer ulike avslutningssig- naler til prosessen og dokumenter hvilke avslutningskommandoer programmet h&aring;ndterer og som trigger avslutningsmeldingen.</p>
-<p>Ressurs: <br /> <span><a href="https://en.wikipedia.org/wiki/Signal_(IPC)">https://en.wikipedia.org/wiki/Signal_(IPC)</a></span></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<h1><strong>4. Typografiske symboler</strong></h1>
-<p>Form&aring;l:</p>
-<ul>
-<li>Bli kjent med ISO/IEC 8859 serier for 8-bits koding av typografiske sym- boler.</li>
-<li>Illustrere forskjell p&aring; ASCII og utvidet ASCII kode gjennom golang ram- meverk for behandling av tekststrenger (p&aring; engelsk brukes det nesten alltid begrepet &ldquo;strings&rdquo; for tekststrenger).</li>
-</ul>
-<p>Hva trenger du &aring; vite for &aring; klare denne oppgaven:</p>
-<ul>
-<li>du m&aring; forst&aring; &ldquo;slices&rdquo; i golang</li>
-<li>at de f&oslash;rste 256 &ldquo;code points&rdquo; (kodepunkter, som tilsvarer typen &ldquo;rune&rdquo; i golang, varierer fra platform til platform og fra program til program; det finnes 15 forskjellige deler av ISO/IEC 8859 serier for 8-bits koder)</li>
-</ul>
-<p>&nbsp;</p>
-<h2><span style="font-size: 18pt;"><strong>Oppgave A</strong></span></h2>
-<p>Bruk filen ascii.go i Oblig1 mappen og lag en funksjon som itererer (g&aring;r i en l&oslash;kke over)&nbsp; over tegn med byte-verdier fra 0x80 til 0xFF, dvs. det utvidede ASCII settet.</p>
-<h3>Kravspesifikasjon</h3>
-<p>Funksjonsnavn skal v&aelig;re iterateOverExtendedASCIIStringLiteral(...) og den skal ta et argument,&nbsp; som skal v&aelig;re av&nbsp; type string (&ldquo;string literal&rdquo;).&nbsp;&nbsp; Dere&nbsp;&nbsp; m&aring; generere / deklarere en string med alle de 128 heksadesimale verdiene ( &ldquo;\x80\x81. . . \xFF&rdquo; ) som funksjonen kan ta som argument. Funksjonen trenger ikke &aring; returnere noe eksplisitt.</p>
-<p>Utskriftsformatet skal v&aelig;re f&oslash;lgende:</p>
-<p>[utvidet-ascii-kode heksadesimalt med store bokstaver A-F][mellomrom][symbol for utvidet-ascii-kode] [mellomrom][utvidet-ascii-kode bin&aelig;rt][linjeskift]</p>
-<p>Eksempel :</p>
-<table style="width: 299px;">
-<tbody>
-<tr>
-<td style="width: 115px; text-align: center;">
-<p>3E</p>
-</td>
-<td style="width: 115px; text-align: center;">
-<p>&nbsp;&gt;</p>
-</td>
-<td style="width: 170px; text-align: center;">
-<p>111110</p>
-</td>
-</tr>
-<tr>
-<td style="width: 115px; text-align: center;">
-<p>BA</p>
-</td>
-<td style="width: 115px; text-align: center;">
-<p>&nbsp;&ordm;</p>
-</td>
-<td style="width: 170px; text-align: center;">
-<p>10111010</p>
-</td>
-</tr>
-<tr>
-<td style="width: 115px; text-align: center;">
-<p>BB</p>
-</td>
-<td style="width: 115px; text-align: center;">
-<p>&nbsp;&raquo;</p>
-</td>
-<td style="width: 170px; text-align: center;">
-<p>10111110</p>
-</td>
-</tr>
-<tr>
-<td style="width: 115px; text-align: center;">
-<p>BF</p>
-</td>
-<td style="width: 115px; text-align: center;">
-<p>&iquest;</p>
-</td>
-<td style="width: 170px; text-align: center;">
-<p>10111111</p>
-</td>
-</tr>
-<tr>
-<td style="width: 115px; text-align: center;">
-<p>C0</p>
-</td>
-<td style="width: 115px; text-align: center;">
-<p>&Agrave;</p>
-</td>
-<td style="width: 170px; text-align: center;">
-<p>11000000</p>
-</td>
-</tr>
-<tr>
-<td style="width: 115px; text-align: center;">
-<p>C1</p>
-</td>
-<td style="width: 115px; text-align: center;">
-<p>&Aacute;</p>
-</td>
-<td style="width: 170px; text-align: center;">
-<p>11000001</p>
-</td>
-</tr>
-<tr>
-<td style="width: 115px;">
-<p>&nbsp;</p>
-</td>
-<td style="width: 115px;">
-<p>. . .</p>
-</td>
-<td style="width: 170px;">
-<p>&nbsp;</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>&nbsp;</p>
-<ul>
-<li>analyser utskriften (spesielt for bytes fra 0x80 til 0x9F)</li>
-<li>utf&oslash;r programmet p&aring; alle gruppemedlemmers datamaskin og analyser</li>
-</ul>
-<p>&nbsp;</p>
-<h2><span style="font-size: 18pt;"><strong>Oppgave B</strong></span></h2>
-<p>Lag en funksjonen ExtendedASCIIText () i samme filen iso.go, som skriver ut: " &euro; &divide; &frac34; dollar "</p>
-<h3>Kravspesifikasjon</h3>
-<ul>
-<li>Funksjonen skal generere en utskrift fra en sekvens av bytes, dvs. av typen []bytes (det betyr at du m&aring; finne den heksadesimale eller bin&aelig;re representasjonen av alle tegn i strengen, som skal skrives ut (inkludert anf&oslash;rselstegn eller &ldquo;double quotes&rdquo; p&aring; engelsk).</li>
-<li>Funksjonen ExtendedASCIIText () skal returnere en variabel av typen string, som inneholder tegn fra Extended</li>
-<li>Utf&oslash;r programmet p&aring; forskjellige platformer(mac,windows,linux) eller forskjellig software(terminal, bash, powershell) og analyser resultater</li>
-</ul>
-<p>&nbsp;</p>
-<h2><span style="font-size: 18pt;"><strong>Oppgave C</strong></span></h2>
-<p>Implementer en test for funksjonen ExtendedASCIIText(String) i egen fil iso_test.go, som tester om input-verdier (av type string) inneholder kun tegn fra en Extended ASCII.</p>
-<p>&nbsp;</p>
-<p><em>Ressurser:</em></p>
-<p><em>Runes: <a href="https://en.wikipedia.org/wiki/Runes">https://en.wikipedia.org/wiki/Runes</a></em></p>
-<p><em>ASCII Table: <a href="http://www.asciitable.com/">http://www.asciitable.com/</a></em></p>
-<p><em>Golang Stings, Bytes, Runes og Characters <a href="https://blog.golang.org/strings">https://blog.golang.org/strings</a></em></p>
-<p><em>Golang FMT package: <a href="https://golang.org/pkg/fmt/">https://golang.org/pkg/fmt/</a></em></p>
-<p><em>Golang Bytes package: <a href="https://golang.org/pkg/bytes/">https://golang.org/pkg/bytes/</a></em></p>
-<p><em>Golang Slices: <a href="https://blog.golang.org/slices">https://blog.golang.org/slices</a></em></p>
+## Oppgave 1: Fyll ut manglende tall i tabell
+
+Binary|Hexadeximal|Decimal
+---|---|---
+1101|0xD|13
+110111101010|0xDEA|3562
+1010111100110100|0xAF34|44852
+1111111111111111|0xFFFF|65535
+00010001011110001010|0x1178A|71562
+
+### - oppg A: Beskriv kort metode for å gå fra binære tall til hexadesimale tall og motsatt. Beskriv kort metoden for å gå fra binære tall til desimaltall og motsatt.
+
+----------------------------------------------------------------------------------------------------------
+	BINÆR TIL HEX
+	Først få binærverdien til å gå opp i 4 (sette på ekstra nuller foran, f.eks 111010 = 0011-1010). Etter dette kan man splitte binærtallet opp i 4 (f.eks 11110010 blir 1111-0010).
+	Her kan vi regne ut de seperate segmentene.
+	1111 = 15
+	0010 = 2
+	Deretter gjør vi disse verdiene om til HEX, og plasserer de etter hverandre.
+	15 = F
+	2 = 2
+	Resultat blir F2 (0xF2).
+----------------------------------------------------------------------------------------------------------
+	HEX TIL BINÆR
+	Man tar hvert individuelt tall i en hex-verdi (f.eks 0xDEAA). Deretter gjør vi hvert siffer om til binært med fire siffre.
+
+	D = 1101
+	E = 1110
+	A = 1010
+	A = 1010
+
+	Resultatet blir binærsiffrene satt opp etter hverandre: D(1101),E(1110),A(1010),A(1010)
+	Eller 1101111010101010.
+----------------------------------------------------------------------------------------------------------
+	BINÆR TIL DESIMAL
+	Måten man går fra binære tall til desimaltall, er å gjøre en mattefunksjon på hvert siffer i binærtallet.
+	Først, ser man hvilken plass sifferet står på.
+	Eksempeltall: 110010110
+	Hvert av disse tallene skal ganges med 2 (siden vi bruker binærsystem / totallsystem). Deretter skal vi opphøye dette i plassen sifferet står på.
+	Siden binærtallet består av 9 siffre, tar vi 8 som et utgangspunkt for lengde (siden datamaskiner teller fra 0, ikke 1). Det første tallet får plass 8, det andre plass 7, osv.
+	Vi plusser deretter funksjonene sammen, og får svaret som desimaltall.
+	1 * 2^8
+	+ 1 * 2^7
+	+ 0 * 2^6
+	+ 0 * 2^5
+	+ 1 * 2^4
+	+ 0 * 2^3
+	+ 1 * 2^2
+	+ 1 * 2^1
+	+ 1 * 2^0
+	= 406
+----------------------------------------------------------------------------------------------------------
+	DESIMAL TIL BINÆR
+	Måten man går fra desimal til binær er å sammenligne tallet med det nærmeste totallsystem tallet som er lavere en eller det samme som desimaltallet (f.eks 1973 sitt nærmeste totallsystemtall er 1024 siden 2048 er høyere en 1973).
+	Deretter tar man desmaltallet og trekker fra totallsystemtallet (1973-1024) og man setter et ett tall for å indikere når man har trukket fra.
+	Så ser man på neste totallsystemtall som er lavere (512) og sjekker om det er høyere en vårt tall (som nå er 949).
+	hvis desimaltallet er lavere enn totallsystemtallet setter man 0 og går til neste totallsystemtall helt til desimaltallet er større enn det neste totallsystemtallet. Slik fortsetter man til man kommer til det siste totallsystemtallet.
+	Eksempel:
+	1973 > 1024 -> 1973 - 1024 = 949 -> 1
+	949 > 512 -> 949 - 512 = 437 -> 1
+	437 > 256 -> 437 - 256 = 181 -> 1
+	181 > 128 -> 181 - 128 = 53 -> 1
+	53 < 64 -> 0
+	53 > 32 -> 53 - 32 = 21 -> 1
+	21 > 16 -> 21 - 16 = 5 -> 1
+	5 < 8 -> 0
+	5 > 4 -> 5 - 4 = 1 -> 1
+	1 < 2 -> 0
+	1 = 1 -> 1 - 1 = 0 -> 1
+
+	1973 = 11110110101
+----------------------------------------------------------------------------------------------------------
+
+
+### - oppg B: Måten man går fra hexadesimale tall til desimal
+----------------------------------------------------------------------------------------------------------
+	DESIMAL TIL HEX
+	Man tar desimaltallet og deler det på 16, så setter man det foran kommaet på desimaltallet man får til siden.
+	Så ganger man det bak kommaet med 16. Da får du det første hexadesimaltallet (fra høyre til venstre).
+	Deretter tar det man satt til siden tidligere, og deler det på 16.
+	Man gjør denne prosessen helt til det foran kommaet er '0'. Ta da det siste sifferet bak komma, og gang det med 16.
+	Dette er det siste hexadesimalet.
+	Eksempel:2034
+	2034 / 16 = 127.125
+	0.125 * 16 = 2
+	127 / 16 = 7.9375
+	0.9375 * 16 = 15 = F
+	7 / 16 = 0.4375
+	0.4375 * 16 = 7
+	2034 = 0x2F7
+----------------------------------------------------------------------------------------------------------
+	HEX TIL DESIMAL
+	Først tar man hex-verdien (f.eks 0xDEA) og gjør desimaltall. Deretter ganger man tallet med 16 (pga hex er sekstentallsystem),
+	for å så opphøye det i hvilken plass sifferet står på. Etter man har gjort denne prosessen individuelt på hvert siffer, plusser
+	man sammen tallene man står igjen med.
+
+	0xDEA = 13 * (16^2), + 14 * (16^1), + 10 * (16^0).
+	= 3328 + 224 + 10 = 3562.
+----------------------------------------------------------------------------------------------------------
+
+## Oppgave 2: Forstå algoritmer og utføre "benchmark"-tester på koden
+### - oppg A:
+Modifisert Bubble-sort funksjon ligger i 'IS-105_obOppg_1/blob/master/Oblig1/src/algorithms/sorting.go', og heter Bubble_sort_modified.
+### - oppg B:
+Benchmark testene ligger i 'IS-105_obOppg_1/blob/master/Oblig1/src/algorithms/sortingtest.go', og bruker 'benchmarkBSortModified'. De andre benchmarktestene er 'BenchmarkMBSort100', 'BenchmarkMBSort1000' og 'BenchmarkMBSort100'.
+### - oppg C:
+Viser funksjon som er kjørt.
+![cmd benchmark](https://raw.githubusercontent.com/StavenX/IS-105_obOppg_1/master/images/Benchmark-test.png "Benchmark")
+
+## Oppgave 3: Forstå prosessadministrasjon på et platform
+Selve loopen ligger i 'IS-105_obOppg_1/blob/master/Oblig1/src/loop/systemLoop.go', og heter main.
+Vi fant en gjennomsnittlig 41% økning i CPU-bruk etter start av loopen.
+
+Dette er Task-Manager statistikk før vi startet den uendelige loopen
+![task manager statistikk](https://raw.githubusercontent.com/StavenX/IS-105_obOppg_1/master/images/status_idle.png "CPU før man starter loop")
+
+Dette er Task-Manager statistikk etter vi startet den uendelige loopen
+![task manager statistikk](https://raw.githubusercontent.com/StavenX/IS-105_obOppg_1/master/images/status_running.png "CPU etter man starter loop")
+
+## Oppgave 4: Typografiske symboler
+### - oppg A:
+### - oppg B:
+### - oppg C:
