@@ -28,8 +28,12 @@ func info() {
 	 }
 
 	 // Provides information about file (name and size)
+	 // NOT WORKING YET, DOES NOT GIVE DECIMALS
 	 fmt.Printf("Information about file %s:\n", filestat.Name())
-	 fmt.Printf("Size: %db\n", filestat.Size())
+	 fmt.Printf("Size: %d bytes\n", filestat.Size())
+	 fmt.Printf("Size: %d kilobytes\n", filestat.Size() / 1024)
+	 fmt.Printf("Size: %d megabytes\n", filestat.Size() / (1024 * 1024))
+	 fmt.Printf("Size: %d gigabytes\n", filestat.Size() / (1024 * 1024 * 1024))
 
 	 // Check if directory or not
 	 if filestat.Mode().IsDir() {
