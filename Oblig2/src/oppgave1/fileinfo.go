@@ -3,33 +3,85 @@ package main
 import (
 	"fmt"
 	"os"
-	"log"
 )
 
 func info() {
+	 args := os.Args
+	 if len(args) == 0 {
+	 	fmt.Println("Missing argument (File)")
+	 	fmt.Println("Usage: go run fileinfo.go myfile.txt")
+	 	return
+	 }
 
-	// Assigns path(?) to file and err
-	file, err := os.OpenFile("Oblig2/src/files/text.txt", os.O_RDWR,0)
+	 filename := args[1]
 
-	// If there is an error, log error
-	if err != nil {
-		log.Fatal(err)
-	}
+	 file, err := os.Open(filename)
+	 if err != nil {
+	 	fmt.Println(err)
+	 	return
+	 }
 
-	switch {
-	case err != nil:
-		// handle the error and return
-	case file.Read():
-		// it's a directory
-	default:
-		// it's not a directory
-	}
+	 filestat, err := file.Stat()
+	 if err != nil {
+	 	fmt.Println(err)
+	 	return
+	 }
 
-	defer file.Close()
+	 // Provides information about file (name and size)
+	 fmt.Printf("Information about file %s:\n", filestat.Name())
+	 fmt.Printf("Size: %db\n", filestat.Size())
+
+	 // Check if directory or not
+	 if filestat.Mode().IsDir() {
+	 	fmt.Println(" Is a directory")
+	 } else {
+	 	fmt.Println(" Is not a directory")
+	 }
+
+	 // Check if regular file or not
+	 if filestat.Mode().IsRegular() {
+	 	fmt.Println(" Is a regular file")
+	 } else {
+	 	fmt.Println(" Is not a regular file")
+	 }
+
+	 // Check if file has UNIX permission bits
+	 fmt.Printf(" Has UNIX permission bits: %s\n", filestat.Mode().Perm())
+
+	 // Check if append only
+	 if filestat.Mode() & os.ModeAppend != 0 {
+	 	fmt.Println(" Is append only")
+	 } else {
+	 	fmt.Println(" Is not append only")
+	 }
+
+	 // Check if device file or not
+	 if filestat.Mode() & os.ModeAppend != 0 {
+	 	fmt.Println(" Is a device file")
+	 } else {
+	 	fmt.Println(" Is not a device file")
+	 }
+
+	 // Check if UNIX character device
+	 if filestat.Mode() & os.ModeCharDevice != 0 {
+	 	fmt.Println(" Is a UNIX character device")
+	 } else {
+	 	fmt.Println(" Is not a UNIX character device")
+	 }
+
+	 //-------------------------------------------------
+	 //		UNIX BLOCK DEVICE CODE
+	 //		HERE.
+	 //-------------------------------------------------
+
+	 // Check if symbolic link
+	 if filestat.Mode() & os.ModeSymlink != 0 {
+	 	fmt.Println(" Is a symbolic link")
+	 } else {
+	 	fmt.Println(" Is not a symbolic link")
+	 }
 }
 
 func main() {
-
-	fmt.Println("Programmet skal returnere informasjon om en fil")
 	info()
 }
