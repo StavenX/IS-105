@@ -60,7 +60,7 @@ func info() {
 	 }
 
 	 // Check if device file or not
-	 if filestat.Mode() & os.ModeAppend != 0 {
+	 if filestat.Mode() & os.ModeDevice != 0 {
 	 	fmt.Println(" Is a device file")
 	 } else {
 	 	fmt.Println(" Is not a device file")
