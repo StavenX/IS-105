@@ -2,18 +2,37 @@
 
 Adrian Nesvik, Edvin Myhren, Endre Grindhaug og Tord Vetle Gjertsen
 
+----------------------------------------------------------------------------------------------------------
+
 ### Oppgave 1
+
+----------------------------------------------------------------------------------------------------------
+
+Programmene ligger i 'IS-105_oppgaver/Oblig2/src/oppgave1', under navnene fileinfo.go og fileinfo.exe.
+
 a) Skriv et Golang program med navn fileinfo.go​,
 
 
 b) Lag en kjørbart program (build) av fileinfo.go som kan utføres fra kommandolinje. Programmet skal ta et argument, som skal være et filnavn.
 
+----------------------------------------------------------------------------------------------------------
 
 ### Oppgave 2
+
+----------------------------------------------------------------------------------------------------------
+
+Programmet ligger i 'IS-105_oppgaver/Oblig2/src/oppgave2/', og heter fielcount.go.
+
 a) Skriv programmer med navn filecount.go som skal lese en tekst-fil, skrive ut totalt antall linjer og de fem “runes” (bokstaver/tegn), som forekommer mest i filen samt hvor mange ganger de telles i den medfølgende filen text.txt. Som forrige oppgave skal filen bygges til et kjørbart program og kunne utføres i terminal med kommandoen: filecount  <filnavn>
 
+----------------------------------------------------------------------------------------------------------
 
 ### Oppgave 3
+
+----------------------------------------------------------------------------------------------------------
+
+Programmene ligger i 'IS-105_oppgaver/Oblig2/src/oppgave3/', under navnene addtofile.go, addup.go og sumfromfile.go.
+
 a) Skriv et program med navn addup.go bestående av to go funksjoner og kommunisere med hverandre gjennom channels
 
 
@@ -33,3 +52,5 @@ d) Implementer håndtering av SIGINT i programmene i a) og b); programmene skal 
 
 
 e) Bygg filene som i oppgave 1 og 2 til kjørbare filer på ditt operativsystem og legg dem ved i /bin mappen.
+
+----------------------------------------------------------------------------------------------------------
