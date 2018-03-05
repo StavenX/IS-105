@@ -2,7 +2,6 @@
 
 Adrian Nesvik, Edvin Myhren, Endre Grindhaug og Tord Vetle Gjertsen
 
-----------------------------------------------------------------------------------------------------------
 
 ### Oppgave 1
 
@@ -10,12 +9,11 @@ Adrian Nesvik, Edvin Myhren, Endre Grindhaug og Tord Vetle Gjertsen
 
 Programmene ligger i 'IS-105_oppgaver/Oblig2/src/oppgave1', under navnene fileinfo.go og fileinfo.exe.
 
-a) Skriv et Golang program med navn fileinfo.go​,
-
+a) Skriv et Golang program med navn fileinfo.go​.
+Programmet returnerer informasjon om en fil. Denne informasjonen skaffes gjennom bruk av flere funksjoner fra 'os' pakken. Programmet kan også returnere feilmeldinger gjennom if/else statements.
 
 b) Lag en kjørbart program (build) av fileinfo.go som kan utføres fra kommandolinje. Programmet skal ta et argument, som skal være et filnavn.
 
-----------------------------------------------------------------------------------------------------------
 
 ### Oppgave 2
 
@@ -25,7 +23,6 @@ Programmet ligger i 'IS-105_oppgaver/Oblig2/src/oppgave2/', og heter fielcount.g
 
 a) Skriv programmer med navn filecount.go som skal lese en tekst-fil, skrive ut totalt antall linjer og de fem “runes” (bokstaver/tegn), som forekommer mest i filen samt hvor mange ganger de telles i den medfølgende filen text.txt. Som forrige oppgave skal filen bygges til et kjørbart program og kunne utføres i terminal med kommandoen: filecount  <filnavn>
 
-----------------------------------------------------------------------------------------------------------
 
 ### Oppgave 3
 
