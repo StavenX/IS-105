@@ -1,6 +1,6 @@
 # IS-105, Obligatorisk oppgave 2
 
-Adrian, Edvin, Endre og Tord
+Adrian Nesvik, Edvin Myhren, Endre Grindhaug og Tord Vetle Gjertsen
 
 ### Oppgave 1
 a) Skriv et Golang program med navn fileinfo.go​,
