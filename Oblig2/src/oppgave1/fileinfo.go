@@ -67,16 +67,11 @@ func info() {
 	 }
 
 	 // Check if UNIX character device
-	 if filestat.Mode() & os.ModeCharDevice != 0 {
-	 	fmt.Println(" Is a UNIX character device")
-	 } else {
-	 	fmt.Println(" Is not a UNIX character device")
-	 }
-
-	 //-------------------------------------------------
-	 //		UNIX BLOCK DEVICE CODE
-	 //		HERE.
-	 //-------------------------------------------------
+	 //if filestat.Mode() & os.ModeCharDevice != 0 {
+	 //	fmt.Println(" Is a UNIX character device")
+	 //} else {
+	 //	fmt.Println(" Is not a UNIX character device")
+	 //}
 
 	 // Check if symbolic link
 	 if filestat.Mode() & os.ModeSymlink != 0 {
