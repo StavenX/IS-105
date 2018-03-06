@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
-	)
+)
 
 var RuneMap = make(map[rune]int)
 
@@ -20,17 +20,21 @@ func main() {
 	}
 
 	filename := args[1]
+	srcForlder := "../files/"
+	filePath := srcForlder + filename
 
-	file, _ := os.Open(filename)
+	file, _ := os.Open(filePath)
 	fileScanner := bufio.NewScanner(file)
 	lineCount := 0
 	for fileScanner.Scan() {
 		lineCount++
 	}
-	fmt.Println(lineCount)
+	fmt.Println("Information about " + args[1])
+	fmt.Printf("Number of lines in file: %d\n", lineCount)
+	fmt.Println("Most Common Runes:")
 
 	//Converts file to string
-	f, err := ioutil.ReadFile(filename)
+	f, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		fmt.Print(err)
 	}
@@ -43,21 +47,15 @@ func main() {
 	for i := 0; i < len(splitString); i++ {
 		MapHandler(splitString[i])
 	}
-	fmt.Println(len(RuneMap))
-	fmt.Println(RuneMap)
+
+	MapSorter(5)
 }
-var array []string
+var Foundletters []string
 
 func MapHandler(char string) {
 	foundIt := false
-	/*for i := 0; i < len(RuneMap); i++ {
-		if char == string(RuneMap[rune(i)]) {
-			foundIt = true
-			fmt.Println("yay")
-		}
-	}*/
-	for i := 0; i < len (array); i++ {
-		if char == array[i] {
+	for i := 0; i < len (Foundletters); i++ {
+		if char == Foundletters[i] {
 			foundIt = true
 		}
 	}
@@ -65,8 +63,41 @@ func MapHandler(char string) {
 	char3 := int(char2[0])
 	if foundIt == false {
 		RuneMap[rune(char3)] = 1
-		array = append(array, char)
+		Foundletters = append(Foundletters, char)
 	} else {
 		RuneMap[rune(char3)]++
+	}
+}
+
+func MapSorter (x int) {
+	//Loop repeats x times
+	for i := 1; i <= x; i++ {
+		number := i
+		highestCount := 0
+		mostUsed := ""
+
+		//Compares every found letter's mentions against the current highestCount
+		for i := 0; i < len(Foundletters); i++ {
+			runeOfString := []rune(Foundletters[i])
+			mentions := RuneMap[runeOfString[0]]
+
+			//Sets new highest count
+			if mentions > highestCount {
+				highestCount = mentions
+				mostUsed = Foundletters[i]
+			}
+		}
+		mostUsedRune := []rune(mostUsed)
+
+		//special condition to better distinguish a space in the stats
+		if mostUsed == " " {
+			mostUsed = "(space)"
+		}
+
+		//prints #i highest number
+		fmt.Printf("%d. Rune: '%s' , Counts: %d\n", number, mostUsed, highestCount)
+
+		//deletes the current highest number
+		delete(RuneMap, mostUsedRune[0])
 	}
 }
