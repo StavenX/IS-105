@@ -1,0 +1,2 @@
+go run filecount.go C:\Users\Staven\Documents\IS-105_oppgaver\Oblig2\src\files\text.txt
+pause
