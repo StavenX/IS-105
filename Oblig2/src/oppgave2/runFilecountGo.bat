@@ -1,2 +1,2 @@
-go run filecount.go ..\src\files\text.txt
+go run filecount.go ..\files\text.txt
 pause
