@@ -95,7 +95,7 @@ func MapSorter (x int) {
 		}
 
 		//prints #i highest number
-		fmt.Printf("%d. Rune: '%s' , Counts: %d\n", number, mostUsed, highestCount)
+		fmt.Printf("%d. Rune: '%s' , Times appeared: %d\n", number, mostUsed, highestCount)
 
 		//deletes the current highest number
 		delete(RuneMap, mostUsedRune[0])
