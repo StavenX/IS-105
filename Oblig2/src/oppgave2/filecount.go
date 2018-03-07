@@ -21,8 +21,7 @@ func main() {
 
 	// finds the file and prepares it
 	filename := args[1]
-	srcForlder := "../files/"
-	filePath := srcForlder + filename
+	filePath := filename
 
 	// Scans the file and counts lines
 	file, _ := os.Open(filePath)
