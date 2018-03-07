@@ -19,10 +19,12 @@ func main() {
 		return
 	}
 
+	// finds the file and prepares it
 	filename := args[1]
 	srcForlder := "../files/"
 	filePath := srcForlder + filename
 
+	// Scans the file and counts lines 
 	file, _ := os.Open(filePath)
 	fileScanner := bufio.NewScanner(file)
 	lineCount := 0
@@ -52,13 +54,17 @@ func main() {
 }
 var Foundletters []string
 
+// Finds each character and counts them
 func MapHandler(char string) {
+
 	foundIt := false
+	// Loop that finds the characters
 	for i := 0; i < len (Foundletters); i++ {
 		if char == Foundletters[i] {
 			foundIt = true
 		}
 	}
+	// Counts the Characters
 	char2 := []rune(char)
 	char3 := int(char2[0])
 	if foundIt == false {
