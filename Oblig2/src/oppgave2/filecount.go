@@ -20,8 +20,7 @@ func main() {
 	}
 
 	filename := args[1]
-	srcForlder := "../files/"
-	filePath := srcForlder + filename
+	filePath := filename
 
 	file, _ := os.Open(filePath)
 	fileScanner := bufio.NewScanner(file)
