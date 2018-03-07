@@ -13,7 +13,7 @@ a) Skriv et Golang program med navn fileinfo.go​.
 Programmet returnerer informasjon om en fil. Denne informasjonen skaffes gjennom bruk av flere funksjoner fra 'os' pakken. Programmet kan også returnere feilmeldinger gjennom if/else statements.
 
 b) Lag en kjørbart program (build) av fileinfo.go som kan utføres fra kommandolinje. Programmet skal ta et argument, som skal være et filnavn.
-
+Filen 'runFileinfoGo.bat' tar et argument og kjører programmet 'fileinfo.go'. På linje 2 pauser vi programmet slik at terminalen ikke lukker seg etter programmet er kjørt.
 
 ### Oppgave 2
 
