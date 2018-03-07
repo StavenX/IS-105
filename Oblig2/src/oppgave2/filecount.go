@@ -24,7 +24,7 @@ func main() {
 	srcForlder := "../files/"
 	filePath := srcForlder + filename
 
-	// Scans the file and counts lines 
+	// Scans the file and counts lines
 	file, _ := os.Open(filePath)
 	fileScanner := bufio.NewScanner(file)
 	lineCount := 0
