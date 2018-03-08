@@ -8,6 +8,7 @@ Adrian Nesvik, Edvin Myhren, Endre Grindhaug og Tord Vetle Gjertsen
 ----------------------------------------------------------------------------------------------------------
 
 Programmene ligger i 'IS-105_oppgaver/Oblig2/src/oppgave1', under navnene fileinfo.go og fileinfo.exe.
+![in cmd](https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/images/FileInfo.png "Shows file-information.")
 
 a) Skriv et Golang program med navn fileinfo.go​.
 Programmet returnerer informasjon om en fil. Denne informasjonen skaffes gjennom bruk av flere funksjoner fra 'os' pakken. Programmet kan også returnere feilmeldinger gjennom if/else statements.
