@@ -3,9 +3,6 @@
 Adrian Nesvik, Edvin Myhren, Endre Grindhaug og Tord Vetle Gjertsen
 
 
-# MalGO | Obligatorisk oppgave 1
-IS-105 @V2018
-
 ### Oppgave 1
 
 ----------------------------------------------------------------------------------------------------------
@@ -24,7 +21,7 @@ Filen 'runFileinfoGo.bat' tar et argument og kjører programmet 'fileinfo.go'. P
 
 ----------------------------------------------------------------------------------------------------------
 
-Programmet ligger i 'IS-105_oppgaver/Oblig2/src/oppgave2/', og heter filecount.go. Den kompilerte filen (filecount.exe) kan bli funnet i (https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/bin/filecount.exe).
+Programmet ligger i 'IS-105_oppgaver/Oblig2/src/oppgave2/', og heter filecount.go. Den kompilerte filen (filecount.exe) kan bli funnet i (https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/bin/file.exe).
 
 ![in cmd](https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/images/FileCount.png "Shows most used runes.")
 
