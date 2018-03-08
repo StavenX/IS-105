@@ -19,7 +19,8 @@ Filen 'runFileinfoGo.bat' tar et argument og kjører programmet 'fileinfo.go'. P
 
 ----------------------------------------------------------------------------------------------------------
 
-Programmet ligger i 'IS-105_oppgaver/Oblig2/src/oppgave2/', og heter fielcount.go.
+Programmet ligger i 'IS-105_oppgaver/Oblig2/src/oppgave2/', og heter filecount.go.
+![in cmd](https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/Oblig2/images/FileCount.png "Shows most used runes.")
 
 a) Skriv programmer med navn filecount.go som skal lese en tekst-fil, skrive ut totalt antall linjer og de fem “runes” (bokstaver/tegn), som forekommer mest i filen samt hvor mange ganger de telles i den medfølgende filen text.txt. Som forrige oppgave skal filen bygges til et kjørbart program og kunne utføres i terminal med kommandoen: filecount  <filnavn>
 
