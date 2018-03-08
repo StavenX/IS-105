@@ -11,7 +11,11 @@ import (
 var RuneMap = make(map[rune]int)
 
 func main() {
-	//Count the lines
+
+	// Declares 'args' as the first argument given on execution.
+	// Also checks if no arguments given (hence if the argument has zero characters), and
+	// if so asks the user to type another argument (path).
+	// + Also gives usage on how to run the file itself.
 	args := os.Args
 	if len(args) == 0 {
 		fmt.Println("Missing argument (File)")
@@ -19,9 +23,8 @@ func main() {
 		return
 	}
 
-	// finds the file and prepares it
-	filename := args[1]
-	filePath := filename
+	// Sets 'filePath' to the first argument given to terminal.
+	filePath := args[1]
 
 	// Scans the file and counts lines
 	file, _ := os.Open(filePath)
