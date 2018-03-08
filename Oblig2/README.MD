@@ -7,31 +7,20 @@ Adrian Nesvik, Edvin Myhren, Endre Grindhaug og Tord Vetle Gjertsen
 
 ----------------------------------------------------------------------------------------------------------
 
-Programmet ligger i (Oblig2/src/oppgave1), under navnet fileinfo.go. Den kompilerte filen (fileinfo.exe) kan bli funnet i (https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/bin/fileinfo.exe).
-
-![in cmd](https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/images/FileInfo.png "Shows file-information.")
-
 #### a) Skriv et Golang program med navn fileinfo.go​.
-Programmene ligger i 'IS-105_oppgaver/Oblig2/src/oppgave1', under navnene fileinfo.go og fileinfo.exe.
-
-a) Skriv et Golang program med navn fileinfo.go​.
+Programmet ligger i 'IS-105_oppgaver/Oblig2/src/oppgave1', under navnet fileinfo.go.
+![in cmd](https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/images/FileInfo.png "Shows file-information.")
 
 Programmet returnerer informasjon om en fil. 'info' funksjonen bruker et if statement for å printe ut feilmeldinger dersom programmet ikke har fått et argument fra kommando-linjen. I neste metode blir argumentet assigned til variabelen 'filename'. En feilmelding blir printet dersom det skjer en feil når filen blir åpnet. I neste metode blir informasjon om filens størrelse printet ut i forskjellige måleenheter. Videre sjekkes det om det er 'directory', 'regular', 'append', 'file' og 'symbolic' eller ikke. Svaret blir sjekket gjennom metoder og printet ut gjennom et if/else statement. Til slutt blir 'info' funksjonen kjørt gjennom 'main' funksjonen.
 
-b) Lag en kjørbart program (build) av fileinfo.go som kan utføres fra kommandolinje. Programmet skal ta et argument, som skal være et filnavn.
-
-Filen 'runFileinfoGo.bat' tar et argument og kjører programmet 'fileinfo.go'. På linje 2 pauser vi programmet slik at terminalen ikke lukker seg etter programmet er kjørt.
-
-
 #### b) Lag en kjørbart program (build) av fileinfo.go som kan utføres fra kommandolinje. Programmet skal ta et argument, som skal være et filnavn.
-Filen 'runFileinfoGo.bat' tar et argument og kjører programmet 'fileinfo.go'. På linje 2 pauser vi programmet slik at terminalen ikke lukker seg etter programmet er kjørt. Hver rune 
+Den kompilerte filen (fileinfo.exe) kan bli funnet i (https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/bin/fileinfo.exe).
 
 ### Oppgave 2
 
 ----------------------------------------------------------------------------------------------------------
 
 Programmet ligger i (Oblig2/src/oppgave2), og heter filecount.go. Den kompilerte filen (filecount.exe) kan bli funnet i (https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/bin/filecount.exe).
-
 ![in cmd](https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/images/FileCount.png "Shows most used runes.")
 
 #### a) Skriv programmer med navn filecount.go som skal lese en tekst-fil, skrive ut totalt antall linjer og de fem “runes” (bokstaver/tegn), som forekommer mest i filen samt hvor mange ganger de telles i den medfølgende filen text.txt. Som forrige oppgave skal filen bygges til et kjørbart program og kunne utføres i terminal med kommandoen: filecount  <filnavn>
