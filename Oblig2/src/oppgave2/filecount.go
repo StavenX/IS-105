@@ -6,6 +6,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
+	"os/signal"
+	"syscall"
+	"time"
 )
 
 var RuneMap = make(map[rune]int)
@@ -50,6 +53,16 @@ func main() {
 	}
 
 	MapSorter(5)
+
+	var stop = make(chan os.Signal)
+	signal.Notify(stop, syscall.SIGTERM)
+	signal.Notify(stop, syscall.SIGINT)
+	go func() {
+		sig := <-stop
+		fmt.Printf("Signal: %+v", sig)
+		time.Sleep(2*time.Second)
+		os.Exit(0)
+	}()
 }
 var Foundletters []string
 

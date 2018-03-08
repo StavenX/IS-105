@@ -3,6 +3,9 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 )
 
 func info() {
@@ -83,4 +86,13 @@ func info() {
 
 func main() {
 	info()
+	var stop = make(chan os.Signal)
+	signal.Notify(stop, syscall.SIGTERM)
+	signal.Notify(stop, syscall.SIGINT)
+	go func() {
+		sig := <-stop
+		fmt.Printf("Signal: %+v", sig)
+		time.Sleep(2*time.Second)
+		os.Exit(0)
+	}()
 }
