@@ -7,7 +7,7 @@ Adrian Nesvik, Edvin Myhren, Endre Grindhaug og Tord Vetle Gjertsen
 
 ----------------------------------------------------------------------------------------------------------
 
-Programmenet ligger i 'IS-105_oppgaver/Oblig2/src/oppgave1', under navnene fileinfo.go. Den kompilerte filen (fileinfo.exe) kan bli funnet i (https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/bin/fileinfo.exe).
+Programmet ligger i (https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/Oblig2/src/oppgave1), under navnet fileinfo.go. Den kompilerte filen (fileinfo.exe) kan bli funnet i (https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/bin/fileinfo.exe).
 
 ![in cmd](https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/images/FileInfo.png "Shows file-information.")
 
