@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 	"os"
-	"os/signal"
-	"syscall"
-	"time"
 )
 
+// Function that goes through the properties of a file, and prints them out to
+// the user. This includes filesize (in bytes, kilobytes, megabytes and gigabytes).
+// Also gives information about file being a directory or not, etc.
 func info() {
 	 args := os.Args
 	 if len(args) == 0 {
@@ -30,7 +30,7 @@ func info() {
 	 	return
 	 }
 
-	 // Provides information about file (name and size)
+	 // Filesize information
 	 bytes := float64(filestat.Size())
 	 fmt.Printf("Information about file %s:\n", filestat.Name())
 	 fmt.Printf("Size: %.0f bytes\n", bytes)
@@ -84,15 +84,7 @@ func info() {
 	 }
 }
 
+// Info function is run here
 func main() {
 	info()
-	var stop = make(chan os.Signal)
-	signal.Notify(stop, syscall.SIGTERM)
-	signal.Notify(stop, syscall.SIGINT)
-	go func() {
-		sig := <-stop
-		fmt.Printf("Signal: %+v", sig)
-		time.Sleep(2*time.Second)
-		os.Exit(0)
-	}()
 }
