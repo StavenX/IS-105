@@ -3,6 +3,9 @@
 Adrian Nesvik, Edvin Myhren, Endre Grindhaug og Tord Vetle Gjertsen
 
 
+# MalGO | Obligatorisk oppgave 1
+IS-105 @V2018
+
 ### Oppgave 1
 
 ----------------------------------------------------------------------------------------------------------
