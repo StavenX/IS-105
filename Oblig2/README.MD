@@ -34,8 +34,10 @@ Vi lager et map med 'make' funksjonen. Den første metoden i main funksjonen pri
 Programmene ligger i 'IS-105_oppgaver/Oblig2/src/oppgave3/', under navnene addtofile.go, addup.go og sumfromfile.go.
 
 #### a) Skriv et program med navn addup.go bestående av to go funksjoner og kommunisere med hverandre gjennom channels
-#### Funksjon A:
-#### Funksjon B:
+#### Funksjon A: 
+'funcA' tar inn to tall. Aksepterer kun tall, og gir feil hvis man skriver bokstaver (eller generelt ikke-aksepterte karakterer)
+#### Funksjon B: 
+'funcB' summerer to tall skrevet inn i 'funcA', og summerer dem. Deretter legger summen 'sum' inn i channel 'ch2'.
  
 
 #### b) Skriv to programmer (addtofile.go og sumfromfile.go) som kommuniserer med hverandre gjennom en fil.
@@ -45,7 +47,7 @@ sumfromfile.go: Leser tall fra fil laget av program A og adderer de to tallene. 
 
 #### c) Beskriv og implementer feilhåndtering på all I/O i oppgave a) og b). Se https://blog.golang.org/error-handling-and-go (Lenker til en ekstern side.)Lenker til en ekstern side. for mer informasjon om feilhåndtering i Go.
 
-Vi har laget håndtering til at tilfellet der brukeren skriver inn en bokstav (f.eks a, b, c) istedenfor et tall (f.eks 1, 2, 1084), så returnerer programmet en feil. Deretter ber den brukeren om å legge inn en akseptabel verdi.
+Vi har laget håndtering (se oppgave 3A og 3B) til at tilfellet der brukeren skriver inn en bokstav (f.eks a, b, c) istedenfor et tall (f.eks 1, 2, 1084), så returnerer programmet en feil. Deretter ber den brukeren om å legge inn en akseptabel verdi.
 
 #### d) Implementer håndtering av SIGINT i programmene i a) og b); programmene skal skrive ut en avslutningsmelding dersom de mottar SIGINT før de fullfører naturlig.
 
@@ -54,6 +56,7 @@ Både a) og b) har implementert SIGINT.
 #### e) Bygg filene som i oppgave 1 og 2 til kjørbare filer på ditt operativsystem og legg dem ved i /bin mappen.
 
 Oppgave 1: Den kompilerte filen (fileinfo.exe) kan bli funnet i (https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/bin/fileinfo.exe).
+
 Oppgave 2: Den kompilerte filen (filecount.exe) kan bli funnet i(https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/bin/filecount.exe).
 
 ----------------------------------------------------------------------------------------------------------
