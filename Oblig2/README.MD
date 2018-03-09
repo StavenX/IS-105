@@ -40,13 +40,20 @@ Programmene ligger i 'IS-105_oppgaver/Oblig2/src/oppgave3/', under navnene addto
 
 #### b) Skriv to programmer (addtofile.go og sumfromfile.go) som kommuniserer med hverandre gjennom en fil.
 
+addtofile.go: Leser inn to tall og skriver disse til en fil.
+sumfromfile.go: Leser tall fra fil laget av program A og adderer de to tallene. Summen skrives tilbake til samme fil. Program A leser resultatet fra fil og skriver ut summen til stdout.
 
 #### c) Beskriv og implementer feilhåndtering på all I/O i oppgave a) og b). Se https://blog.golang.org/error-handling-and-go (Lenker til en ekstern side.)Lenker til en ekstern side. for mer informasjon om feilhåndtering i Go.
 
+Vi har laget håndtering til at tilfellet der brukeren skriver inn en bokstav (f.eks a, b, c) istedenfor et tall (f.eks 1, 2, 1084), så returnerer programmet en feil. Deretter ber den brukeren om å legge inn en akseptabel verdi.
 
 #### d) Implementer håndtering av SIGINT i programmene i a) og b); programmene skal skrive ut en avslutningsmelding dersom de mottar SIGINT før de fullfører naturlig.
 
+Både a) og b) har implementert SIGINT.
 
 #### e) Bygg filene som i oppgave 1 og 2 til kjørbare filer på ditt operativsystem og legg dem ved i /bin mappen.
+
+Oppgave 1: Den kompilerte filen (fileinfo.exe) kan bli funnet i (https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/bin/fileinfo.exe).
+Oppgave 2: Den kompilerte filen (filecount.exe) kan bli funnet i(https://raw.githubusercontent.com/StavenX/IS-105_oppgaver/master/Oblig2/bin/filecount.exe).
 
 ----------------------------------------------------------------------------------------------------------
