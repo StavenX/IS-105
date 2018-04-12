@@ -10,10 +10,10 @@ import (
 )
 
 type Entries struct {
-	Entries []Entry `json:"datasets"`
+	Entries []Datasett `json:"datasets"`
 }
 
-type Entry struct {
+type Datasett struct {
 	ID string `json:"id"`
 	Title string `json:"title"`
 	Description string `json:"description"`
@@ -25,8 +25,10 @@ type Entry struct {
 	Name string `json:"name"`
 	MailBox string `json:"mbox"`
 	Keyword string `json:"keyword"`
-	Distribusjon string `json:"distribusjon"`
-	//Title string
+}
+
+type Distribusjon struct {
+	Title string `json.datasets:"distribusjon"`
 }
 
 func main() {
@@ -73,7 +75,7 @@ fmt.Println("Publisher: " + entries.Entries[i].Publisher)
 fmt.Println("Name: " + entries.Entries[i].Name)
 fmt.Println("MailBox: " + entries.Entries[i].MailBox)
 fmt.Println("Keyword: " + entries.Entries[i].Keyword)
-fmt.Println("Distribusjon: " + entries.Entries[i].Distribusjon)
+//fmt.Println("Distribusjon: " + entries.Entries[i].Distribusjon)
 
 //fmt.Println(" ")
 
