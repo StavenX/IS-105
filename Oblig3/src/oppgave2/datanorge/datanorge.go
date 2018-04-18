@@ -9,8 +9,6 @@ import (
 	"strings"
 )
 
-
-
 func main() {
 	openJson()
 	http.HandleFunc("/1", printToServer)
@@ -43,7 +41,7 @@ type Description struct {
 
 var datasets Datasets
 
-// -------------------------------------------------
+// ---------------------------------------------------
 
 func openJson() {
 	url := "https://data.norge.no/api/dcat/data.json?page=1"
