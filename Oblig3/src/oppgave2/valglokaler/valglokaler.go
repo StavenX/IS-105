@@ -19,10 +19,12 @@ func main() {
 
 // ---------------------------------------------------
 
+// Structure of all county entries
 type Entries struct {
 	Entries []Entry `json:"entries"`
 }
 
+// Structure of indivdual countey (kommune)
 type Entry struct {
 	Kommune string `json:"kommune"`
 	Fylke string `json:"fylke"`
@@ -71,10 +73,10 @@ func openJson() {
 
 	for i := 0; i < len(entries.Entries); i++ {
 		printAll(i)
-
 	}
 }
 
+// Prints all the data to console
 func printAll(index int) {
 	d:= entries.Entries[index]
 	fmt.Println()
@@ -90,10 +92,11 @@ func printAll(index int) {
 	fmt.Printf("URL: %s\n", d.URL)
 }
 
+// Prints all the data to server
 func printToServer(writer http.ResponseWriter, request *http.Request) {
 	for i := 0; i < len(entries.Entries); i++ {
 		d := entries.Entries[i]
-		fmt.Fprintln(writer,)
+		fmt.Fprintln(writer)
 		fmt.Fprintf(writer,"Kommune: %s\n", d.Kommune)
 		fmt.Fprintf(writer,"Fylke: %s\n", d.Fylke)
 		fmt.Fprintf(writer,"Navn: %s\n", d.Navn)
@@ -106,23 +109,3 @@ func printToServer(writer http.ResponseWriter, request *http.Request) {
 		fmt.Fprintf(writer,"URL: %s\n", d.URL)
 	}
 }
-
-/* we iterate through every user within our users array and
- print out the user Type, their name, and their facebook url
-
-for i := 0; i < len(entries.Entries); i++ {
-	fmt.Println(" ")
-	fmt.Println("Entry: " + strconv.Itoa(i))
-	fmt.Println("Kommune: " + entries.Entries[i].Kommune)
-	fmt.Println("Fylke: " + entries.Entries[i].Fylke)
-	fmt.Println("Navn: " + entries.Entries[i].Navn)
-	fmt.Println("Sist endret: " + entries.Entries[i].SistEndret)
-	fmt.Println("Addresse: " + entries.Entries[i].Addresse)
-	fmt.Println("Åpningstider: " + entries.Entries[i].Aapningstider)
-	fmt.Println("Longitude: " + entries.Entries[i].Longitude)
-	fmt.Println("ID: " + entries.Entries[i].ID)
-	fmt.Println("Latitude: " + entries.Entries[i].Latitude)
-	fmt.Println("URL: " + entries.Entries[i].URL)
-	}
-}
-*/
