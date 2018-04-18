@@ -25,17 +25,17 @@ func main() {
 // Open our jsonFile
 jsonFile, err := os.Open("miljostasjoner.json")
 
-// if we os.Open returns an error then handle it
+// if we os.Open, and returns an error then handle it
 if err != nil {
 	fmt.Println(err)
 }
 fmt.Println("Successfully Opened hotell.json")
 fmt.Println("https://hotell.difi.no/api/json/stavanger/miljostasjoner (Lenker til en ekstern side.)")
 
-// defer the closing of our jsonFile so that we can parse it later on
+// Defer the closing of our jsonFile so that we can parse it later on
 defer jsonFile.Close()
 
-// read our opened xmlFile as a byte array.
+// Read our opened json-file as a byte array.
 byteValue, _ := ioutil.ReadAll(jsonFile)
 
 
@@ -44,21 +44,30 @@ var entries Entries
 
 
 // we unmarshal our byteArray which contains our
-// jsonFile's content into 'users' which we defined above
+// jsonFile's content into 'entries' which we defined above
 json.Unmarshal(byteValue, &entries)
 
+printAllEntries(entries)
 
-// we iterate through every user within our users array and
-// print out the user Type, their name, and their facebook url
-// as just an example
-for i := 0; i < len(entries.Entries); i++ {
-fmt.Println("Entry: " + strconv.Itoa(i))
-fmt.Println("Latitude: " + entries.Entries[i].Latitude)
-fmt.Println("Navn: " + entries.Entries[i].Navn)
-fmt.Println("Plast: " + entries.Entries[i].Plast)
-fmt.Println("Glass_Metall: " + entries.Entries[i].Glass_Metall)
-fmt.Println("Tekstil_sko: " + entries.Entries[i].Tekstil_sko)
-fmt.Println("Longitude: " + entries.Entries[i].Longitude)
-fmt.Println(" ")
 }
+
+func printAllEntries(entries Entries) {
+	// we iterate through every user within our users array and
+	// print out the user Type, their name, and their facebook url
+	// as just an example
+
+	fmt.Println()
+	fmt.Println("Listing all entries in Miljøstasjoner: ")
+
+	for i := 0; i < len(entries.Entries); i++ {
+		fmt.Println()
+
+		fmt.Println("Entry: " + strconv.Itoa(i))
+		fmt.Println("Latitude: " + entries.Entries[i].Latitude)
+		fmt.Println("Navn: " + entries.Entries[i].Navn)
+		fmt.Println("Plast: " + entries.Entries[i].Plast)
+		fmt.Println("Glass_Metall: " + entries.Entries[i].Glass_Metall)
+		fmt.Println("Tekstil_sko: " + entries.Entries[i].Tekstil_sko)
+		fmt.Println("Longitude: " + entries.Entries[i].Longitude)
+	}
 }
