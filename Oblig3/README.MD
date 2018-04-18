@@ -40,4 +40,4 @@ Etter det bruker vi http.HandleFunc og setter pathen "/" til å bruke func hello
 
 ----------------------------------------------------------------------------------------------------------
 
-### a)
+### a) Implementer et serverprogram i henhold til RFC 865. Serveren skal svare både på UDP og TCP.
