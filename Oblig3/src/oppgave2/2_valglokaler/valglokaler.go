@@ -1,4 +1,4 @@
-package main
+package _valglokaler
 
 import (
 	//"os"
@@ -12,8 +12,8 @@ import (
 )
 
 func main() {
-	openJson()
-	http.HandleFunc("/2", printToServer)
+	getJson()
+	http.HandleFunc("/2", PrintToServer)
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -42,7 +42,7 @@ var entries Entries
 
 // ---------------------------------------------------
 
-func openJson() {
+func getJson() {
 	url := "https://hotell.difi.no/api/json/kmd/valglokaler/2015/forhand?"
 
 	client := http.Client{
@@ -72,12 +72,12 @@ func openJson() {
 	fmt.Printf("Length: %d\n", len(entries.Entries))
 
 	for i := 0; i < len(entries.Entries); i++ {
-		printAll(i)
+		PrintAll(i)
 	}
 }
 
 // Prints all the data to console
-func printAll(index int) {
+func PrintAll(index int) {
 	d:= entries.Entries[index]
 	fmt.Println()
 	fmt.Printf("Kommune: %s\n", d.Kommune)
@@ -93,7 +93,7 @@ func printAll(index int) {
 }
 
 // Prints all the data to server
-func printToServer(writer http.ResponseWriter, request *http.Request) {
+func PrintToServer(writer http.ResponseWriter, request *http.Request) {
 	for i := 0; i < len(entries.Entries); i++ {
 		d := entries.Entries[i]
 		fmt.Fprintln(writer)

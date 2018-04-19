@@ -1,4 +1,4 @@
-package main
+package _hotell
 
 import (
 	"fmt"
@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	openJson()
-	http.HandleFunc("/3", printToServer)
+	getJson()
+	http.HandleFunc("/3", PrintToServer)
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -34,7 +34,7 @@ var entries Entries
 
 // ---------------------------------------------------
 
-func openJson() {
+func getJson() {
 	url := "https://hotell.difi.no/api/json/fad/reise/utland?"
 
 	client := http.Client{
@@ -64,12 +64,12 @@ func openJson() {
 	fmt.Printf("Length: %d\n", len(entries.Entries))
 
 	for i := 0; i < len(entries.Entries); i++ {
-		printAll(i)
+		PrintAll(i)
 	}
 }
 
 // Prints all the data to console
-func printAll(index int) {
+func PrintAll(index int) {
 	d:= entries.Entries[index]
 	fmt.Println()
 	fmt.Printf("By: %s\n", d.By)
@@ -81,7 +81,7 @@ func printAll(index int) {
 }
 
 // Prints all the data to server
-func printToServer(writer http.ResponseWriter, request *http.Request) {
+func PrintToServer(writer http.ResponseWriter, request *http.Request) {
 	for i := 0; i < len(entries.Entries); i++ {
 		d := entries.Entries[i]
 		fmt.Fprintln(writer)

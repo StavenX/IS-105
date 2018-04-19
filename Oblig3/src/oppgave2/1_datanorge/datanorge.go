@@ -1,4 +1,4 @@
-package main
+package _datanorge
 
 import (
 	"fmt"
@@ -10,8 +10,8 @@ import (
 )
 
 func main() {
-	openJson()
-	http.HandleFunc("/1", printToServer)
+	getJson()
+	http.HandleFunc("/1", PrintToServer)
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -43,7 +43,7 @@ var datasets Datasets
 
 // ---------------------------------------------------
 
-func openJson() {
+func getJson() {
 	url := "https://data.norge.no/api/dcat/data.json?page=1"
 
 	client := http.Client{
@@ -73,12 +73,12 @@ func openJson() {
 	fmt.Printf("Length: %d\n", len(datasets.Datasets))
 
 	for i := 0; i < len(datasets.Datasets); i++ {
-		printAll(i)
+		PrintAll(i)
 
 	}
 }
 
-func printAll(index int) {
+func PrintAll(index int) {
 	d:= datasets.Datasets[index]
 	fmt.Printf("\nID: %s\n", d.ID)
 	fmt.Printf("Tittel: %s\n", d.Title)
@@ -93,7 +93,7 @@ func printAll(index int) {
 }
 
 
-func printToServer(writer http.ResponseWriter, request *http.Request) {
+func PrintToServer(writer http.ResponseWriter, request *http.Request) {
 	for i := 0; i < len(datasets.Datasets); i++ {
 		d := datasets.Datasets[i]
 		fmt.Fprintf(writer,"\nID: %s\n", d.ID)
