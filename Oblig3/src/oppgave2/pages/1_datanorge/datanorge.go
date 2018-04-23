@@ -40,6 +40,7 @@ type Description struct {
 }
 
 var datasets Datasets
+var URL = "https://data.norge.no/api/dcat/data.json?page=1"
 
 // ---------------------------------------------------
 

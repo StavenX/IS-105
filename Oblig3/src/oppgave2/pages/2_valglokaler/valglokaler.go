@@ -39,6 +39,7 @@ type Entry struct {
 }
 
 var entries Entries
+var URL = "https://hotell.difi.no/api/json/kmd/valglokaler/2015/forhand?"
 
 // ---------------------------------------------------
 

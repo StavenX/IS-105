@@ -31,6 +31,7 @@ type Entry struct {
 }
 
 var entries Entries
+var URL = "https://hotell.difi.no/api/json/fad/reise/utland?"
 
 // ---------------------------------------------------
 
