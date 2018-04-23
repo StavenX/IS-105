@@ -8,7 +8,8 @@ import (
 	"./pages/2_valglokaler"
 	"./pages/3_hotell"
 	"./pages/4_miljostasjoner"
-	//"./pages/5_organisasjon"
+	"./pages/5_organisasjon"
+
 	"fmt"
 	"time"
 	"io/ioutil"
@@ -17,15 +18,19 @@ import (
 
 func main() {
 	http.HandleFunc("/", helloClient)
+
 	http.HandleFunc("/1", printPage1)
 	http.HandleFunc("/2", printPage2)
 	http.HandleFunc("/3", printPage3)
 	http.HandleFunc("/4", printPage4)
-	//http.HandleFunc("/5", Page5)
+	http.HandleFunc("/5", printPage5)
+
 	http.ListenAndServe(":8080", nil)
 }
 
-//for oppgave1
+// Function for oppgave 1. Is also used here (2) for greeting
+// the client. Works both by just accessing "/", or any other "/[number]"
+// which is not handled above.
 func helloClient(writer http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(writer, "Hello pro client!")
 }
@@ -234,6 +239,33 @@ func printPage4(writer http.ResponseWriter, r *http.Request) {
 		v := page.Entries[i]
 		values := []string{v.Latitude, v.Navn, v.Plast, v.Glass_Metall, v.Tekstil_sko,
 		v.Longitude}
+
+		useTemplate(writer, loadTemplate(title, names, values))
+	}
+}
+
+// Prints the fifth page of organisasjoner.
+func printPage5(writer http.ResponseWriter, r *http.Request) {
+	// Initialises the page
+	page  := _organisasjon.Entries{}
+
+	// Puts json data into the readable format defined in page
+	jsonErr := json.Unmarshal(getJson(_organisasjon.URL), &page)
+	if jsonErr != nil {
+		fmt.Println(jsonErr)
+	}
+	title := "Oversikt over forskjellige organisasjonsdata"
+
+	// Writes header to the html page
+	writeTitle(writer, _organisasjon.URL)
+
+	//Uses template on each object in the json data
+	for i := 0; i < len(page.Entries); i++ {
+		names := []string{"Stiftelsesdato", "Organisasjonsform", "Navn", "Tlf",
+		"Forretningsaddresse", "Poststed", "Regdato"}
+		v := page.Entries[i]
+		values := []string{v.Stiftelsesdato, v.Organisasjonsform, v.Navn, v.Tlf,
+		v.Forretningsadresse, v.Poststed, v.Regdato}
 
 		useTemplate(writer, loadTemplate(title, names, values))
 	}
