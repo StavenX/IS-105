@@ -17,14 +17,19 @@ import (
 )
 
 func main() {
+
+	// Handles every "/" request. Also works on other "/"
+	// that are not handled.
 	http.HandleFunc("/", helloClient)
 
+	// Handler for the individual pages we have selected.
 	http.HandleFunc("/1", printPage1)
 	http.HandleFunc("/2", printPage2)
 	http.HandleFunc("/3", printPage3)
 	http.HandleFunc("/4", printPage4)
 	http.HandleFunc("/5", printPage5)
 
+	// Opens the server on the given port
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -80,22 +85,22 @@ func getJson(url string) []byte {
 	return body
 }
 
-//adds values to the Template type to make it ready for the html template
+// Adds values to the Template type to make it ready for the HTML template
 func loadTemplate(title string, names, values []string) *Template {
 	//adds spacing between name and value for template
 	//as well as filling in for missing or empty data
 	for i := 0; i < len(names); i++ {
 		names[i] += ": "
 		if len(values[i]) == 0 {
-			values[i] += "-missing-"
+			values[i] += "-VALUE MISSING-"
 		}
 	}
 
-	//initialises an empty Template type, needs to happen within function or it will not clear properly
+	// Initialises an empty Template type, needs to happen within function or it will not clear properly
 	t := Template{Title:title}
 	t.Name0 = names[0]
 	t.Value0 = values[0]
-	//adds names and values to the Template type based on the names slice length
+	// Adds names and values to the Template type based on the names slice length
 	for i := 0; i < len(names); i++ {
 		switch i {
 		case 1:
@@ -132,13 +137,15 @@ func writeTitle (writer http.ResponseWriter, url string) {
 }
 
 // Renders the template as a html page
-func useTemplate(w http.ResponseWriter, page *Template) {
+func useTemplate(writer http.ResponseWriter, page *Template) {
 	template, _ := template.ParseFiles("page-template.html")
-	template.Execute(w, page)
+	template.Execute(writer, page)
 }
 
 // ------------------------------------------------------------------
-// Pages code below!												|
+// Individual page's code below. There is a lot of code duplication												|
+// which we are aware of. But currently we have not discovered another
+// way of handling it.
 // ------------------------------------------------------------------
 
 // Prints the first page of datasets.
