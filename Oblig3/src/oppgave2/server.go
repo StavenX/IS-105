@@ -7,7 +7,7 @@ import (
 	"./pages/1_datanorge"
 	"./pages/2_valglokaler"
 	"./pages/3_hotell"
-	//"./pages/4_miljostasjoner"
+	"./pages/4_miljostasjoner"
 	//"./pages/5_organisasjon"
 	"fmt"
 	"time"
@@ -20,7 +20,7 @@ func main() {
 	http.HandleFunc("/1", printPage1)
 	http.HandleFunc("/2", printPage2)
 	http.HandleFunc("/3", printPage3)
-	//http.HandleFunc("/4", Page4)
+	http.HandleFunc("/4", printPage4)
 	//http.HandleFunc("/5", Page5)
 	http.ListenAndServe(":8080", nil)
 }
@@ -136,7 +136,6 @@ func useTemplate(w http.ResponseWriter, page *Template) {
 // Pages code below!												|
 // ------------------------------------------------------------------
 
-
 // Prints the first page of datasets.
 func printPage1(writer http.ResponseWriter, r *http.Request) {
 	// Initialises the page
@@ -208,6 +207,33 @@ func printPage3(writer http.ResponseWriter, r *http.Request) {
 		names := []string{"By", "Kost", "Land", "Makssatser_natt", "Verdensdel"}
 		v := page.Entries[i]
 		values := []string{v.By, v.Kost, v.Land, v.Makssatser_Natt, v.Verdensdel}
+
+		useTemplate(writer, loadTemplate(title, names, values))
+	}
+}
+
+// Prints the fouth page of miljøstasjoner.
+func printPage4(writer http.ResponseWriter, r *http.Request) {
+	// Initialises the page
+	page  := _miljostasjoner.Entries{}
+
+	// Puts json data into the readable format defined in page
+	jsonErr := json.Unmarshal(getJson(_miljostasjoner.URL), &page)
+	if jsonErr != nil {
+		fmt.Println(jsonErr)
+	}
+	title := "Oversikt over miljøstasjoner"
+
+	// Writes header to the html page
+	writeTitle(writer, _miljostasjoner.URL)
+
+	//Uses template on each object in the json data
+	for i := 0; i < len(page.Entries); i++ {
+		names := []string{"Latitude", "Navn", "Plast", "Glass_metall", "Tekstil_Sko",
+		"Longitude"}
+		v := page.Entries[i]
+		values := []string{v.Latitude, v.Navn, v.Plast, v.Glass_Metall, v.Tekstil_sko,
+		v.Longitude}
 
 		useTemplate(writer, loadTemplate(title, names, values))
 	}

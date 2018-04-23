@@ -30,6 +30,7 @@ type Miljostasjon struct {
 }
 
 var entries Entries
+var URL = "https://hotell.difi.no/api/json/stavanger/miljostasjoner"
 
 // ---------------------------------------------------
 
