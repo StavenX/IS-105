@@ -1,2 +1,2 @@
-go run users.go
+go run server.go
 pause
