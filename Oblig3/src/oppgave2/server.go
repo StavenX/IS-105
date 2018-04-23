@@ -3,10 +3,12 @@ package main
 import (
 	"net/http"
 
-	"./1_datanorge"
-	"./2_valglokaler"
-	"./3_hotell"
-	"./4_miljostasjoner"
+	"html/template"
+	"./pages/1_datanorge"
+	"./pages/2_valglokaler"
+	"./pages/3_hotell"
+	"./pages/4_miljostasjoner"
+	"./pages/5_organisasjon"
 )
 
 func main() {
