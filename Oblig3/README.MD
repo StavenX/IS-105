@@ -28,6 +28,8 @@ Etter det bruker vi http.HandleFunc og setter pathen "/" til å bruke func hello
 
 
 ### a) Presenter data på webserveren slik at den er leselig for mennesker(Ren tekst, f.eks. "Sted: Jorenhholem, dato: 13.04.2018", ikke i curly brackets.) når klienter aksesserer stiene /1, /2, /3, /4, /5.
+Vi fant 5 forskjellige API'er med json filer og lagde klasser med structs til hver av dem.
+Vi henter også filene fra nettet istedenfor å laste dem ned og structer dem individuelt.
 
 
 ### b) Samtlige stier i oppgave 2 skal rendres til klienter ved bruk av Go templates.
