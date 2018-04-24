@@ -23,7 +23,7 @@ func tcp() {
 	// accept connection on port
 	conn, _ := ln.Accept()
 
-	quote := "Eg er i Arendal pga. noko AUF-greier, så eg er nok dessverre litt opptatt i dag"
+	quote := "The weather is nice today, and so are you!"
 	// run loop forever (or until ctrl-c)
 	for {
 		bufio.NewReader(conn).ReadString('\n')
@@ -35,7 +35,7 @@ func udp() {
 	/* Lets prepare a address at any address at port 10001*/
 	ServerAddr,err := net.ResolveUDPAddr("udp",":17")
 	CheckError(err)
-	quote := "Har noko AUF-greier som eg må ta hånd om, så eg kan ofre meg for laget"
+	quote := "The world is nice. Appreciate it!"
 
 	/* Now listen at selected port */
 	ServerConn, err := net.ListenUDP("udp", ServerAddr)

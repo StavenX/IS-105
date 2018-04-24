@@ -7,7 +7,7 @@ import (
 
 // Simple method that greets when accessing the server
 func hello(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "Hello client.")
+	io.WriteString(w, "Hello, client.")
 }
 
 func main() {
