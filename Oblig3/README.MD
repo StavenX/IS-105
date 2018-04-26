@@ -33,7 +33,8 @@ Vi henter også filene fra nettet istedenfor å laste dem ned og "structer" dem 
 
 
 ### b) Samtlige stier i oppgave 2 skal rendres til klienter ved bruk av Go templates.
-
+Alle stiene rendres til klienter med Go templates. De blir gjort klare med 'func loadTemplate' og senere ble de rendret med
+'func useTemplate'
 
 
 
