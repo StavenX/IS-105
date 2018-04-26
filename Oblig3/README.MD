@@ -46,3 +46,12 @@ Alle stiene rendres til klienter med Go templates. De blir gjort klare med 'func
 ----------------------------------------------------------------------------------------------------------
 
 ### a) Implementer et serverprogram i henhold til RFC 865. Serveren skal svare både på UDP og TCP.
+Vi lagde et server program som som du finner 'Oblig3/src/oppgave3/Server.go' hvor vi fikk den til å bruke både:
+
+#### UDP:
+
+![in cmd](https://github.com/StavenX/IS-105_oppgaver/blob/master/Oblig3/images/udp.png)
+
+#### og TCP:
+
+![in cmd](https://github.com/StavenX/IS-105_oppgaver/blob/master/Oblig3/images/tcp.png)
