@@ -59,6 +59,8 @@ Disse gir deg svar når snakker til dem gjennom serveren:
 
 #### UDP:
 
-
+![in cmd](https://github.com/StavenX/IS-105_oppgaver/blob/master/Oblig3/images/udprun.png)
 
 #### TCP:
+
+![in cmd](https://github.com/StavenX/IS-105_oppgaver/blob/master/Oblig3/images/tcprun.png)
