@@ -40,7 +40,6 @@ Alle stiene rendres til klienter med Go templates. De blir gjort klare med 'func
 
 
 
-
 ## Oppgave 3
 
 ----------------------------------------------------------------------------------------------------------
@@ -57,3 +56,9 @@ Vi lagde et server program som som du finner 'Oblig3/src/oppgave3/Server.go' hvo
 ![in cmd](https://github.com/StavenX/IS-105_oppgaver/blob/master/Oblig3/images/tcp.png)
 
 Disse gir deg svar når snakker til dem gjennom serveren:
+
+#### UDP:
+
+
+
+#### TCP:
