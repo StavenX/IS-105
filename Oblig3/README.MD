@@ -36,7 +36,7 @@ Vi henter også filene fra nettet istedenfor å laste dem ned og "structer" dem 
 Alle stiene rendres til klienter med Go templates. De blir gjort klare med 'func loadTemplate' og senere ble de rendret med
 'func useTemplate'
 
-![in cmd](https://github.com/StavenX/IS-105_oppgaver/tree/master/Oblig3/images/Data1.png)
+![in cmd](https://github.com/StavenX/IS-105_oppgaver/tree/master/Oblig3/images/data1.png)
 
 
 
