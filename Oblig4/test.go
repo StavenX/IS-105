@@ -209,7 +209,7 @@ func PrintEarthquakesToServer1(writer http.ResponseWriter, request *http.Request
 	}
 }
 func PrintEarthquakesToServer2(writer http.ResponseWriter, request *http.Request,) {
-	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson")
+	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
 	fmt.Fprintln(writer)
 	fmt.Fprintln(writer, "List of earthquakes: ")
 
