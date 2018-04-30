@@ -51,7 +51,7 @@ type Earthquake struct {
 }
 
 type Header struct {
-	Type     string `json:"type"`
+	Type string `json:"type"`
 	Metadata struct {
 		Generated int64  `json:"generated"`
 		URL       string `json:"url"`
@@ -64,7 +64,7 @@ type Header struct {
 
 func PrintHeaderToConsole() {
 	fmt.Println("Type: ", 		header.Type)
-	
+
 	fmt.Println("Metadata: ")
 	fmt.Println("Generated: ", 	header.Metadata.Generated)
 	fmt.Println("URL: ", 		header.Metadata.URL)
@@ -72,7 +72,6 @@ func PrintHeaderToConsole() {
 	fmt.Println("Status: ", 		header.Metadata.Status)
 	fmt.Println("API: ", 		header.Metadata.API)
 	fmt.Println("Count: ", 		header.Metadata.Count)
-
 }
 
 var entries Earthquakes
@@ -85,7 +84,6 @@ func main() {
  	openServer()
 
 	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
-
 }
 
 // Uses an URL as parameter for the getJson. Works only on URL's from
@@ -118,9 +116,16 @@ func getJson(_url string) {
 		fmt.Println("JSON unmarshal error.")
 	}
 
-	fmt.Printf("Length: %d\n", len(entries.Earthquakes))
+	hjsonerr := json.Unmarshal(body, &header)
+	if hjsonerr != nil {
+		fmt.Println("JSON unmarshal error.")
+	}
 
-		PrintEarthquakesToConsole()
+	fmt.Printf("Amount of earthquakes: %d\n", len(entries.Earthquakes))
+
+	// Prints for earthquake information
+	PrintHeaderToConsole()
+	PrintEarthquakesToConsole()
 }
 
 func openServer() {
@@ -143,6 +148,8 @@ func openServer() {
 func PrintEarthquakesToConsole() {
 	for i := 0; i < len(entries.Earthquakes); i++ {
 		d:= entries.Earthquakes[i]
+		fmt.Println()
+		fmt.Println("List of earthquakes: ")
 		fmt.Println()
 		fmt.Println("Magnitude: ", 	d.Properties.Magnitude)
 		fmt.Println("Place: ", 		d.Properties.Place)
