@@ -25,7 +25,7 @@ type Earthquake struct {
 		Magnitude float32 	`json:"mag"`
 		Place string 		`json:"place"`
 		Time int64 			`json:"time"`
-		Updated int64 		`json:"time"`
+		Updated int64 		`json:"updated"`
 		TimeZone int32 		`json:"tz"`
 		URL string 			`json:"url"`
 		Detail string 		`json:"detail"`
@@ -78,6 +78,19 @@ type Header struct {
 
 	}
 	*/
+}
+
+func PrintHeaderToServer(writer http.ResponseWriter, request *http.Request) {
+	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
+	fmt.Fprintln(writer, "Type: ", header.Type)
+	fmt.Fprintln(writer)
+	fmt.Fprintln(writer, "Metadata: ")
+	fmt.Fprintln(writer, "Generated: ", header.Metadata.Generated)
+	fmt.Fprintln(writer, "URL: ", header.Metadata.URL)
+	fmt.Fprintln(writer, "Title: ", header.Metadata.Title)
+	fmt.Fprintln(writer, "Status: ", header.Metadata.Status)
+	fmt.Fprintln(writer, "API: ", header.Metadata.API)
+	fmt.Fprintln(writer, "Count: ", header.Metadata.Count)
 }
 
 func PrintHeaderToConsole() {
@@ -164,6 +177,7 @@ func openServer() {
 	// Handler for the individual pages we have selected.
 	http.HandleFunc("/1", PrintEarthquakesToServer1)
 	http.HandleFunc("/2", PrintEarthquakesToServer2)
+	http.HandleFunc("/header", PrintHeaderToServer)
 
 	// Opens the server on the given port
 	http.ListenAndServe(":8080", nil)
@@ -175,7 +189,7 @@ func printHello(writer http.ResponseWriter, request *http.Request) {
 }
 
 func PrintEarthquakesToServer1(writer http.ResponseWriter, request *http.Request,) {
-	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
+	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson")
 	fmt.Fprintln(writer)
 	fmt.Fprintln(writer, "List of earthquakes: ")
 
