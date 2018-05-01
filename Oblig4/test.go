@@ -184,22 +184,32 @@ func openServer() {
 
 }
 
+func getUnixAsReadable(_time int64) time.Time  {
+	t := time.Unix(int64(_time) / 1000, 0)
+	return t
+}
+
 func printHello(writer http.ResponseWriter, request *http.Request) {
 	fmt.Fprintln(writer, "Hello client")
 }
 
 func PrintEarthquakesToServer1(writer http.ResponseWriter, request *http.Request,) {
-	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson")
+	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
 	fmt.Fprintln(writer)
 	fmt.Fprintln(writer, "List of earthquakes: ")
 
 	for i := 0; i < len(entries.Earthquakes); i++ {
 		d:= entries.Earthquakes[i]
 		fmt.Fprintln(writer)
-		fmt.Fprintln(writer,"Magnitude: ", 	d.Properties.Magnitude)
 		fmt.Fprintln(writer,"Place: ", 		d.Properties.Place)
-		fmt.Fprintln(writer,"Time: ", 		d.Properties.Time)
-		fmt.Fprintln(writer,"Updated: ", 	d.Properties.Updated)
+		fmt.Fprintln(writer,"Magnitude: ", 	d.Properties.Magnitude)
+
+		// Converting time in Unix format to readable time
+		//t := time.Unix(int64(d.Properties.Time) / 1000, 0)
+		//fmt.Fprintln(writer, "Time: ", t)
+
+		fmt.Fprintln(writer, "Time: ", getUnixAsReadable(d.Properties.Time))
+		fmt.Fprintln(writer,"Updated: ", 	getUnixAsReadable(d.Properties.Updated))
 		fmt.Fprintln(writer,"TimeZone: ", 	d.Properties.TimeZone)
 		fmt.Fprintln(writer,"Detail: ", 		d.Properties.Detail)
 		fmt.Fprintln(writer,"Felt: ", 		d.Properties.Felt)
