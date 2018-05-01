@@ -25,7 +25,7 @@ type Earthquake struct {
 		Magnitude float32 	`json:"mag"`
 		Place string 		`json:"place"`
 		Time int64 			`json:"time"`
-		Updated int64 		`json:"time"`
+		Updated int64 		`json:"updated"`
 		TimeZone int32 		`json:"tz"`
 		URL string 			`json:"url"`
 		Detail string 		`json:"detail"`
@@ -78,6 +78,19 @@ type Header struct {
 
 	}
 	*/
+}
+
+func PrintHeaderToServer(writer http.ResponseWriter, request *http.Request) {
+	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
+	fmt.Fprintln(writer, "Type: ", header.Type)
+	fmt.Fprintln(writer)
+	fmt.Fprintln(writer, "Metadata: ")
+	fmt.Fprintln(writer, "Generated: ", header.Metadata.Generated)
+	fmt.Fprintln(writer, "URL: ", header.Metadata.URL)
+	fmt.Fprintln(writer, "Title: ", header.Metadata.Title)
+	fmt.Fprintln(writer, "Status: ", header.Metadata.Status)
+	fmt.Fprintln(writer, "API: ", header.Metadata.API)
+	fmt.Fprintln(writer, "Count: ", header.Metadata.Count)
 }
 
 func PrintHeaderToConsole() {
@@ -164,10 +177,16 @@ func openServer() {
 	// Handler for the individual pages we have selected.
 	http.HandleFunc("/1", PrintEarthquakesToServer1)
 	http.HandleFunc("/2", PrintEarthquakesToServer2)
+	http.HandleFunc("/header", PrintHeaderToServer)
 
 	// Opens the server on the given port
 	http.ListenAndServe(":8080", nil)
 
+}
+
+func getUnixAsReadable(_time int64) time.Time  {
+	t := time.Unix(int64(_time) / 1000, 0)
+	return t
 }
 
 func printHello(writer http.ResponseWriter, request *http.Request) {
@@ -182,10 +201,15 @@ func PrintEarthquakesToServer1(writer http.ResponseWriter, request *http.Request
 	for i := 0; i < len(entries.Earthquakes); i++ {
 		d:= entries.Earthquakes[i]
 		fmt.Fprintln(writer)
-		fmt.Fprintln(writer,"Magnitude: ", 	d.Properties.Magnitude)
 		fmt.Fprintln(writer,"Place: ", 		d.Properties.Place)
-		fmt.Fprintln(writer,"Time: ", 		d.Properties.Time)
-		fmt.Fprintln(writer,"Updated: ", 	d.Properties.Updated)
+		fmt.Fprintln(writer,"Magnitude: ", 	d.Properties.Magnitude)
+
+		// Converting time in Unix format to readable time
+		//t := time.Unix(int64(d.Properties.Time) / 1000, 0)
+		//fmt.Fprintln(writer, "Time: ", t)
+
+		fmt.Fprintln(writer, "Time: ", getUnixAsReadable(d.Properties.Time))
+		fmt.Fprintln(writer,"Updated: ", 	getUnixAsReadable(d.Properties.Updated))
 		fmt.Fprintln(writer,"TimeZone: ", 	d.Properties.TimeZone)
 		fmt.Fprintln(writer,"Detail: ", 		d.Properties.Detail)
 		fmt.Fprintln(writer,"Felt: ", 		d.Properties.Felt)
