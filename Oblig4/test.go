@@ -6,8 +6,6 @@ import (
 	"time"
 	"io/ioutil"
 	"encoding/json"
-	//"strings"
-	//"strconv"
 )
 
 // API key for Google Maps embedding on website
@@ -60,43 +58,51 @@ type Header struct {
 		API       string `json:"api"`
 		Count     int    `json:"count"`
 	} `json:"metadata"`
-	/*BBOX struct {
-
-		minimum longitude,
-		minimum latitude,
-		minimum depth,
-		maximum longitude,
-		maximum latitude,
-		maximum depth
-
-		MinLongitude float32 `json:"minimum longitude"`
-		MinLatitude float32 `json:"minimum latitude"`
-		MinDepth float32 `json:"minimum depth"`
-		MaxLongitude float32 `json:"maximum longitude"`
-		MaxLatitude float32 `json:"maximum latitude"`
-		MaxDepth float32 `json:"maximum depth"`
-
+	Bbox     []float64 `json:"bbox"`
+	Features []struct {
+		Geometry struct {
+			Coordinates []float64 `json:"coordinates"`
+			Type        string    `json:"type"`
+		} `json:"geometry"`
 	}
-	*/
+
 }
 
+// Prints the JSON header to the server (webpage)
 func PrintHeaderToServer(writer http.ResponseWriter, request *http.Request) {
 	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
+	fmt.Fprintln(writer, "----------------------------------------------------------------")
 	fmt.Fprintln(writer, "Type: ", header.Type)
 	fmt.Fprintln(writer)
 	fmt.Fprintln(writer, "Metadata: ")
-	fmt.Fprintln(writer, "Generated: ", header.Metadata.Generated)
+	fmt.Fprintln(writer, "Generated: ", getUnixAsReadable(header.Metadata.Generated))
 	fmt.Fprintln(writer, "URL: ", header.Metadata.URL)
 	fmt.Fprintln(writer, "Title: ", header.Metadata.Title)
 	fmt.Fprintln(writer, "Status: ", header.Metadata.Status)
 	fmt.Fprintln(writer, "API: ", header.Metadata.API)
 	fmt.Fprintln(writer, "Count: ", header.Metadata.Count)
+	fmt.Fprintln(writer)
+
+	// Print for BBOX
+	fmt.Fprintln(writer, "Minimum Longitude: ", header.Bbox[0])
+	fmt.Fprintln(writer, "Minimum Latitude: ", header.Bbox[1])
+	fmt.Fprintln(writer, "Minimum Depth: ", header.Bbox[2])
+	fmt.Fprintln(writer, "Maximum Longitude: ", header.Bbox[3])
+	fmt.Fprintln(writer, "Maximum Latitude: ", header.Bbox[4])
+	fmt.Fprintln(writer, "Maximum Depth: ", header.Bbox[5])
+	fmt.Fprintln(writer)
+
+	// Print for Geometry
+	for i := 0; i < len(header.Features); i++ {
+		fmt.Fprintln(writer, "earthquake entry ", i,  header.Features[i])
+	}
+	fmt.Fprintln(writer, "----------------------------------------------------------------")
 }
 
+// Prints the JSON header to the server console. Use for local printing
 func PrintHeaderToConsole() {
 	fmt.Println("Type: ", 		header.Type)
-	fmt.Println()
-	fmt.Println("Metadata: ")
+	fmt.Println("Metadata for session -- ")
 	fmt.Println("Generated: ", 	header.Metadata.Generated)
 	fmt.Println("URL: ", 		header.Metadata.URL)
 	fmt.Println("Title: ", 		header.Metadata.Title)
@@ -184,17 +190,26 @@ func openServer() {
 
 }
 
+// Takes Unix time as parameter, and returns time in a readable format
 func getUnixAsReadable(_time int64) time.Time  {
-	t := time.Unix(int64(_time) / 1000, 0)
+	t := time.Unix((
+		int64(_time) / 1000), // +
+		//int64(_timeZone) * 60,
+		0)
+
 	return t
 }
 
+// Prints hello to the client
 func printHello(writer http.ResponseWriter, request *http.Request) {
 	fmt.Fprintln(writer, "Hello client")
 }
 
+
 func PrintEarthquakesToServer1(writer http.ResponseWriter, request *http.Request,) {
 	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
+
+	PrintHeaderToServer(writer,request)
 	fmt.Fprintln(writer)
 	fmt.Fprintln(writer, "List of earthquakes: ")
 
@@ -208,7 +223,7 @@ func PrintEarthquakesToServer1(writer http.ResponseWriter, request *http.Request
 		//t := time.Unix(int64(d.Properties.Time) / 1000, 0)
 		//fmt.Fprintln(writer, "Time: ", t)
 
-		fmt.Fprintln(writer, "Time: ", getUnixAsReadable(d.Properties.Time))
+		fmt.Fprintln(writer, "Time: ", 		getUnixAsReadable(d.Properties.Time))
 		fmt.Fprintln(writer,"Updated: ", 	getUnixAsReadable(d.Properties.Updated))
 		fmt.Fprintln(writer,"TimeZone: ", 	d.Properties.TimeZone)
 		fmt.Fprintln(writer,"Detail: ", 		d.Properties.Detail)
