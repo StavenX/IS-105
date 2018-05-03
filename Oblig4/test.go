@@ -12,10 +12,13 @@ import (
 var apiKey = "AIzaSyCZ7HKaCO5AQUQ27f6bEEzCnj6rOAhs_NA"
 
 // ----------------------------
+
+// Struct for the whole array of Earthquakes
 type Earthquakes struct {
 	Earthquakes []Earthquake `json:"features"`
 }
 
+// Struct for the Earthquake data itself
 type Earthquake struct {
 	Type string `json:"type"`
 	Properties struct {
@@ -48,6 +51,7 @@ type Earthquake struct {
 	} `json:"properties"`
 }
 
+// Struct for the header that exists in each individual Earthquake json
 type Header struct {
 	Type string `json:"type"`
 	Metadata struct {
@@ -65,7 +69,6 @@ type Header struct {
 			Type        string    `json:"type"`
 		} `json:"geometry"`
 	}
-
 }
 
 var entries Earthquakes
@@ -73,10 +76,9 @@ var header Header
 
 // ----------------------------
 
+// Excecuting things happens here
 func main() {
-
  	openServer()
-	//getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
 }
 
 // Uses an URL as parameter for the getJson. Works only on URL's from
