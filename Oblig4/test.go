@@ -125,13 +125,14 @@ func getJson(_url string) {
 
 // Opens a server on the given port. Will greet the user on a default path
 func openServer() {
+
 	// Handles every "/" request. Also works on other "/"
 	// that are not handled.
 	http.HandleFunc("/", printHello)
 
 	// Handler for the individual pages we have selected.
-	http.HandleFunc("/1", PrintEarthquakesToServer1)
-	http.HandleFunc("/header", PrintHeaderToServer)
+	http.HandleFunc("/1", PrintEarthquakesToServerLASTDAY)
+	http.HandleFunc("/2", PrintEarthquakesToServerLASTHOUR)
 
 	// Opens the server on the given port
 	http.ListenAndServe(":8080", nil)
@@ -153,7 +154,7 @@ func getUnixAsReadable(_time int64) time.Time  {
 
 // Prints the JSON header to the server (webpage)
 func PrintHeaderToServer(writer http.ResponseWriter, request *http.Request) {
-	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
+	//getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
 	fmt.Fprintln(writer, "----------------------------------------------------------------")
 	fmt.Fprintln(writer, "Type: ", header.Type)
 	fmt.Fprintln(writer)
@@ -208,14 +209,16 @@ func PrintHeaderToConsole() {
 func PrintEarthquakesToServer1(writer http.ResponseWriter, request *http.Request,) {
 	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
 	PrintHeaderToServer(writer,request)
-	fmt.Fprintln(writer)
-	fmt.Fprintln(writer, "List of earthquakes: ")
 	PrintEarthquakeInformation(writer)
 }
 
 // Function to print individual information about an earthquake. Reduces code duplucation, and prevents
 // the need for writing many, long functions with the same data
 func PrintEarthquakeInformation(writer http.ResponseWriter) {
+
+	fmt.Fprintln(writer)
+	fmt.Fprintln(writer, "List of earthquakes: ")
+
 	for i := 0; i < len(entries.Earthquakes); i++ {
 		d:= entries.Earthquakes[i]
 		fmt.Fprintln(writer)
@@ -281,4 +284,18 @@ func PrintEarthquakesToConsole() {
 		fmt.Println("Type: ", 		d.Properties.Type)
 
 	}
+}
+
+// Print earthquake data to the server console
+func PrintEarthquakesToServerLASTHOUR(writer http.ResponseWriter, request *http.Request,) {
+	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
+	PrintHeaderToServer(writer,request)
+	PrintEarthquakeInformation(writer)
+}
+
+// Print earthquake data to the server console
+func PrintEarthquakesToServerLASTDAY(writer http.ResponseWriter, request *http.Request,) {
+	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson")
+	PrintHeaderToServer(writer,request)
+	PrintEarthquakeInformation(writer)
 }
