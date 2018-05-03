@@ -6,18 +6,19 @@ import (
 	"time"
 	"io/ioutil"
 	"encoding/json"
-	//"strings"
-	//"strconv"
 )
 
 // API key for Google Maps embedding on website
 var apiKey = "AIzaSyCZ7HKaCO5AQUQ27f6bEEzCnj6rOAhs_NA"
 
 // ----------------------------
+
+// Struct for the whole array of Earthquakes
 type Earthquakes struct {
 	Earthquakes []Earthquake `json:"features"`
 }
 
+// Struct for the Earthquake data itself
 type Earthquake struct {
 	Type string `json:"type"`
 	Properties struct {
@@ -50,6 +51,7 @@ type Earthquake struct {
 	} `json:"properties"`
 }
 
+// Struct for the header that exists in each individual Earthquake json
 type Header struct {
 	Type string `json:"type"`
 	Metadata struct {
@@ -60,59 +62,13 @@ type Header struct {
 		API       string `json:"api"`
 		Count     int    `json:"count"`
 	} `json:"metadata"`
-	/*BBOX struct {
-
-		minimum longitude,
-		minimum latitude,
-		minimum depth,
-		maximum longitude,
-		maximum latitude,
-		maximum depth
-
-		MinLongitude float32 `json:"minimum longitude"`
-		MinLatitude float32 `json:"minimum latitude"`
-		MinDepth float32 `json:"minimum depth"`
-		MaxLongitude float32 `json:"maximum longitude"`
-		MaxLatitude float32 `json:"maximum latitude"`
-		MaxDepth float32 `json:"maximum depth"`
-
+	Bbox     []float64 `json:"bbox"`
+	Features []struct {
+		Geometry struct {
+			Coordinates []float64 `json:"coordinates"`
+			Type        string    `json:"type"`
+		} `json:"geometry"`
 	}
-	*/
-}
-
-func PrintHeaderToServer(writer http.ResponseWriter, request *http.Request) {
-	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
-	fmt.Fprintln(writer, "Type: ", header.Type)
-	fmt.Fprintln(writer)
-	fmt.Fprintln(writer, "Metadata: ")
-	fmt.Fprintln(writer, "Generated: ", header.Metadata.Generated)
-	fmt.Fprintln(writer, "URL: ", header.Metadata.URL)
-	fmt.Fprintln(writer, "Title: ", header.Metadata.Title)
-	fmt.Fprintln(writer, "Status: ", header.Metadata.Status)
-	fmt.Fprintln(writer, "API: ", header.Metadata.API)
-	fmt.Fprintln(writer, "Count: ", header.Metadata.Count)
-}
-
-func PrintHeaderToConsole() {
-	fmt.Println("Type: ", 		header.Type)
-	fmt.Println()
-	fmt.Println("Metadata: ")
-	fmt.Println("Generated: ", 	header.Metadata.Generated)
-	fmt.Println("URL: ", 		header.Metadata.URL)
-	fmt.Println("Title: ", 		header.Metadata.Title)
-	fmt.Println("Status: ", 		header.Metadata.Status)
-	fmt.Println("API: ", 		header.Metadata.API)
-	fmt.Println("Count: ", 		header.Metadata.Count)
-
-	/*bbox test
-	fmt.Println()
-	fmt.Println("Minimum Longitude: ", header.BBOX.MinLongitude)
-	fmt.Println("Minimum Latitude: ", header.BBOX.MinLatitude)
-	fmt.Println("Minimum Depth: ", header.BBOX.MinDepth)
-	fmt.Println("Maximum Longitude: ", header.BBOX.MaxLongitude)
-	fmt.Println("Maximum Latitude: ", header.BBOX.MaxLatitude)
-	fmt.Println("Maximum Depth: ", header.BBOX.MaxDepth)
-	*/
 }
 
 var entries Earthquakes
@@ -120,11 +76,9 @@ var header Header
 
 // ----------------------------
 
+// Excecuting things happens here
 func main() {
-
  	openServer()
-
-	//getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
 }
 
 // Uses an URL as parameter for the getJson. Works only on URL's from
@@ -169,32 +123,99 @@ func getJson(_url string) {
 	PrintEarthquakesToConsole()
 }
 
+// Opens a server on the given port. Will greet the user on a default path
 func openServer() {
+
 	// Handles every "/" request. Also works on other "/"
 	// that are not handled.
 	http.HandleFunc("/", printHello)
 
 	// Handler for the individual pages we have selected.
-	http.HandleFunc("/1", PrintEarthquakesToServer1)
-	http.HandleFunc("/2", PrintEarthquakesToServer2)
-	http.HandleFunc("/header", PrintHeaderToServer)
+	http.HandleFunc("/1", PrintEarthquakesToServerLASTDAY)
+	http.HandleFunc("/2", PrintEarthquakesToServerLASTHOUR)
 
 	// Opens the server on the given port
 	http.ListenAndServe(":8080", nil)
-
 }
 
-func getUnixAsReadable(_time int64) time.Time  {
-	t := time.Unix(int64(_time) / 1000, 0)
-	return t
-}
-
+// Prints hello to the client
 func printHello(writer http.ResponseWriter, request *http.Request) {
 	fmt.Fprintln(writer, "Hello client")
 }
+// Takes Unix time as parameter, and returns time in a readable format
+func getUnixAsReadable(_time int64) time.Time  {
+	t := time.Unix((
+		int64(_time) / 1000), // +
+		//int64(_timeZone) * 60,
+		0)
 
+	return t
+}
+
+// Prints the JSON header to the server (webpage)
+func PrintHeaderToServer(writer http.ResponseWriter, request *http.Request) {
+	//getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
+	fmt.Fprintln(writer, "----------------------------------------------------------------")
+	fmt.Fprintln(writer, "Type: ", header.Type)
+	fmt.Fprintln(writer)
+	fmt.Fprintln(writer, "Metadata: ")
+	fmt.Fprintln(writer, "Generated: ", getUnixAsReadable(header.Metadata.Generated))
+	fmt.Fprintln(writer, "URL: ", header.Metadata.URL)
+	fmt.Fprintln(writer, "Title: ", header.Metadata.Title)
+	fmt.Fprintln(writer, "Status: ", header.Metadata.Status)
+	fmt.Fprintln(writer, "API: ", header.Metadata.API)
+	fmt.Fprintln(writer, "Count: ", header.Metadata.Count)
+	fmt.Fprintln(writer)
+
+	// Print for BBOX
+	fmt.Fprintln(writer, "Minimum Longitude: ", header.Bbox[0])
+	fmt.Fprintln(writer, "Minimum Latitude: ", header.Bbox[1])
+	fmt.Fprintln(writer, "Minimum Depth: ", header.Bbox[2])
+	fmt.Fprintln(writer, "Maximum Longitude: ", header.Bbox[3])
+	fmt.Fprintln(writer, "Maximum Latitude: ", header.Bbox[4])
+	fmt.Fprintln(writer, "Maximum Depth: ", header.Bbox[5])
+	fmt.Fprintln(writer)
+
+	// Print for Geometry
+	for i := 0; i < len(header.Features); i++ {
+		fmt.Fprintln(writer, "earthquake entry ", i,  header.Features[i])
+	}
+	fmt.Fprintln(writer, "----------------------------------------------------------------")
+}
+
+// Prints the JSON header to the server console. Use for local printing
+func PrintHeaderToConsole() {
+	fmt.Println("Type: ", 		header.Type)
+	fmt.Println("Metadata for session -- ")
+	fmt.Println("Generated: ", 	header.Metadata.Generated)
+	fmt.Println("URL: ", 		header.Metadata.URL)
+	fmt.Println("Title: ", 		header.Metadata.Title)
+	fmt.Println("Status: ", 		header.Metadata.Status)
+	fmt.Println("API: ", 		header.Metadata.API)
+	fmt.Println("Count: ", 		header.Metadata.Count)
+
+	/*bbox test
+	fmt.Println()
+	fmt.Println("Minimum Longitude: ", header.BBOX.MinLongitude)
+	fmt.Println("Minimum Latitude: ", header.BBOX.MinLatitude)
+	fmt.Println("Minimum Depth: ", header.BBOX.MinDepth)
+	fmt.Println("Maximum Longitude: ", header.BBOX.MaxLongitude)
+	fmt.Println("Maximum Latitude: ", header.BBOX.MaxLatitude)
+	fmt.Println("Maximum Depth: ", header.BBOX.MaxDepth)
+	*/
+}
+
+// Print earthquake data to the server console
 func PrintEarthquakesToServer1(writer http.ResponseWriter, request *http.Request,) {
 	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
+	PrintHeaderToServer(writer,request)
+	PrintEarthquakeInformation(writer)
+}
+
+// Function to print individual information about an earthquake. Reduces code duplucation, and prevents
+// the need for writing many, long functions with the same data
+func PrintEarthquakeInformation(writer http.ResponseWriter) {
+
 	fmt.Fprintln(writer)
 	fmt.Fprintln(writer, "List of earthquakes: ")
 
@@ -203,12 +224,7 @@ func PrintEarthquakesToServer1(writer http.ResponseWriter, request *http.Request
 		fmt.Fprintln(writer)
 		fmt.Fprintln(writer,"Place: ", 		d.Properties.Place)
 		fmt.Fprintln(writer,"Magnitude: ", 	d.Properties.Magnitude)
-
-		// Converting time in Unix format to readable time
-		//t := time.Unix(int64(d.Properties.Time) / 1000, 0)
-		//fmt.Fprintln(writer, "Time: ", t)
-
-		fmt.Fprintln(writer, "Time: ", getUnixAsReadable(d.Properties.Time))
+		fmt.Fprintln(writer, "Time: ", 		getUnixAsReadable(d.Properties.Time))
 		fmt.Fprintln(writer,"Updated: ", 	getUnixAsReadable(d.Properties.Updated))
 		fmt.Fprintln(writer,"TimeZone: ", 	d.Properties.TimeZone)
 		fmt.Fprintln(writer,"Detail: ", 		d.Properties.Detail)
@@ -232,42 +248,8 @@ func PrintEarthquakesToServer1(writer http.ResponseWriter, request *http.Request
 		fmt.Fprintln(writer,"Type: ", 		d.Properties.Type)
 	}
 }
-func PrintEarthquakesToServer2(writer http.ResponseWriter, request *http.Request,) {
-	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
-	fmt.Fprintln(writer)
-	fmt.Fprintln(writer, "List of earthquakes: ")
 
-	for i := 0; i < len(entries.Earthquakes); i++ {
-		d:= entries.Earthquakes[i]
-		fmt.Fprintln(writer)
-		fmt.Fprintln(writer,"Magnitude: ", 	d.Properties.Magnitude)
-		fmt.Fprintln(writer,"Place: ", 		d.Properties.Place)
-		fmt.Fprintln(writer,"Time: ", 		d.Properties.Time)
-		fmt.Fprintln(writer,"Updated: ", 	d.Properties.Updated)
-		fmt.Fprintln(writer,"TimeZone: ", 	d.Properties.TimeZone)
-		fmt.Fprintln(writer,"Detail: ", 		d.Properties.Detail)
-		fmt.Fprintln(writer,"Felt: ", 		d.Properties.Felt)
-		fmt.Fprintln(writer,"CDI: ", 		d.Properties.CDI)
-		fmt.Fprintln(writer,"MMI: ", 		d.Properties.MMI)
-		fmt.Fprintln(writer,"Alert: ", 		d.Properties.Alert)
-		fmt.Fprintln(writer,"Status: ", 		d.Properties.Status)
-		fmt.Fprintln(writer,"Tsunami: ", 	d.Properties.Tsunami)
-		fmt.Fprintln(writer,"Significance: ",d.Properties.SIG)
-		fmt.Fprintln(writer,"NET: ", 		d.Properties.NET)
-		fmt.Fprintln(writer,"Code: ", 		d.Properties.Code)
-		fmt.Fprintln(writer,"IDS: ", 		d.Properties.IDS)
-		fmt.Fprintln(writer,"Sources: ", 	d.Properties.Sources)
-		fmt.Fprintln(writer,"Types: ", 		d.Properties.Types)
-		fmt.Fprintln(writer,"NST: ", 		d.Properties.NST)
-		fmt.Fprintln(writer,"DMIN: ", 		d.Properties.DMIN)
-		fmt.Fprintln(writer,"RMS: ", 		d.Properties.RMS)
-		fmt.Fprintln(writer,"GAP: ", 		d.Properties.GAP)
-		fmt.Fprintln(writer,"MagType: ", 	d.Properties.MagType)
-		fmt.Fprintln(writer,"Type: ", 		d.Properties.Type)
-	}
-}
-
-
+// Prints earthquake data to local console
 func PrintEarthquakesToConsole() {
 
 	fmt.Println()
@@ -302,4 +284,18 @@ func PrintEarthquakesToConsole() {
 		fmt.Println("Type: ", 		d.Properties.Type)
 
 	}
+}
+
+// Print earthquake data to the server console
+func PrintEarthquakesToServerLASTHOUR(writer http.ResponseWriter, request *http.Request,) {
+	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
+	PrintHeaderToServer(writer,request)
+	PrintEarthquakeInformation(writer)
+}
+
+// Print earthquake data to the server console
+func PrintEarthquakesToServerLASTDAY(writer http.ResponseWriter, request *http.Request,) {
+	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson")
+	PrintHeaderToServer(writer,request)
+	PrintEarthquakeInformation(writer)
 }
