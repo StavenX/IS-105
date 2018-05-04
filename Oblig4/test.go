@@ -246,6 +246,7 @@ func PrintEarthquakeInformation(writer http.ResponseWriter) {
 		fmt.Fprintln(writer,"GAP: ", 		d.Properties.GAP)
 		fmt.Fprintln(writer,"MagType: ", 	d.Properties.MagType)
 		fmt.Fprintln(writer,"Type: ", 		d.Properties.Type)
+		fmt.Fprintln(writer, "LongLatDepth: ", header.Features[i].Geometry.Coordinates)
 	}
 }
 
