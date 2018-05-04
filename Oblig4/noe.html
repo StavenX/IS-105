@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    #map {
+      height: 100%;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+  </style>
+</head>
+
+<body id="body">
+
+  <div style="width: 100%; height: 100%; display: table;">
+      <div style="display: table-row">
+
+          <div style="width: 800px; display: table-cell;">
+
+            Earthquakes
+
+          </div>
+
+          <div style="display: table-cell;">
+
+            <iframe
+
+            width= 100%
+            height= 100%
+            frameborder="0" style="border:0"
+            id="map"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDa9svTYOQl-UA_JoITszuPI2H9844a9lw&q=73.7496+-10.3280&zoom=4" allowfullscreen >
+
+            </iframe>
+
+           </div>
+      </div>
+  </div>
+</body>
+</html>
