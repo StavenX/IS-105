@@ -6,6 +6,8 @@ import (
 	"time"
 	"io/ioutil"
 	"encoding/json"
+	"html/template"
+	"log"
 )
 
 // API key for Google Maps embedding on website
@@ -75,9 +77,10 @@ var entries Earthquakes
 var header Header
 
 // ----------------------------
-
+var InvalidData bool
 // Excecuting things happens here
 func main() {
+	InvalidData = false
  	openServer()
 }
 
@@ -121,6 +124,19 @@ func getJson(_url string) {
 	// Prints for earthquake information
 	PrintHeaderToConsole()
 	PrintEarthquakesToConsole()
+}
+
+func renderTemplate(w http.ResponseWriter, page *Header){
+	t, err := template.ParseFiles("noe.html")
+	if err != nil{
+		log.Fatal(err)
+	}
+	if !InvalidData {
+		t.Execute(w, page)
+	} else {
+		fmt.Fprintf(w, "test")
+	}
+
 }
 
 // Opens a server on the given port. Will greet the user on a default path
