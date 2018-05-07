@@ -176,10 +176,11 @@ func PrintHeaderToServer(writer http.ResponseWriter, request *http.Request) {
 	fmt.Fprintln(writer, "Maximum Depth: ", header.Bbox[5])
 	fmt.Fprintln(writer)
 
-	// Print for Geometry
+	/* Print for Geometry
 	for i := 0; i < len(header.Features); i++ {
 		fmt.Fprintln(writer, "earthquake entry ", i,  header.Features[i])
 	}
+	*/
 	fmt.Fprintln(writer, "----------------------------------------------------------------")
 }
 
