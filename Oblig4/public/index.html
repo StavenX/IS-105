@@ -27,8 +27,43 @@
     ::-webkit-scrollbar-thumb:hover {
         background: #555;
     }
-	
+	.collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+.active, .collapsible:hover {
+    background-color: #555;
+}
+
+.collapsible:after {
+    content: '\002B';
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212";
+}
+
+.content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+}
 	</style>
+	
 	<title>Maps</title>
 	<script>
 	if (!String.prototype.format) {
@@ -41,26 +76,10 @@
 			});
 		};
 	}
-
-	var coll = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-            content.style.display = "none";
-        } else {
-            content.style.display = "block";
-        }
-    });
-}
 	</script>
 </head>
 
 <body id="body">
-
 	<div style="width: 100%; height: 100%; display: table;">
 		<div style="display: table-row">
 			<div style="width: 50%; display: table-cell;" id = "entryBox"></div>
@@ -68,9 +87,9 @@ for (i = 0; i < coll.length; i++) {
 			<div style="display: table-cell;" id="map"></div>
 		</div>
 	</div>
+
 	<script>
 	var map, coords, earthquakedata = null;
-
 	function loadData(url, callback){
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", url, true);
@@ -90,7 +109,6 @@ for (i = 0; i < coll.length; i++) {
 	function init(){
 		if (typeof(google) === "undefined" || earthquakedata === null)
 			return;
-
 		var coords = {lat: 0, lng: 0}; // Set default value if no data was found
 		
 		if (earthquakedata.features.length > 0){ // Put the first earthquake data as the main starting point
@@ -98,7 +116,6 @@ for (i = 0; i < coll.length; i++) {
 			coords.lat = entry.geometry.coordinates[1];
 			coords.lng = entry.geometry.coordinates[0];
 		}
-
 		map = new google.maps.Map(document.getElementById("map"), {
 			center: coords,
 			zoom: 7,
@@ -129,25 +146,23 @@ for (i = 0; i < coll.length; i++) {
 		}
 		makeEntryBox();
 	}
-
 	function makeEntryBox() {
 		var box = document.getElementById("entryBox");
-
 		var htmlCode = "";
 		for (var i = 0; i < earthquakedata.features.length; i++) {
 			var entry = earthquakedata.features[i];
 			htmlCode += `
-			<button class="collapsible">{0}</button>
+			<button class="collapsible">${entry.properties.title}</button>
 			<div class="content">
 				<div>${entry.properties.title}</div>
 				<div>${entry.properties.mag}</div>
-				<div>${entry.properties.coordinates}</div>
+				<div>Longitude: ${entry.geometry.coordinates[0]}</div>
+				<div>Latitude: ${entry.geometry.coordinates[1]}</div>
 			</div>
 			`
 		}
 		box.innerHTML = htmlCode;
 	}
-
 	function setMarker(latitude, longitude, title = "Test", content = null){
 		var marker = new google.maps.Marker({
 			map: map,
@@ -155,12 +170,10 @@ for (i = 0; i < coll.length; i++) {
 			title: title,
 			animation: google.maps.Animation.DROP
 		});
-
 		if (content !== null){
 			var info = new google.maps.InfoWindow({
 				content: content
 			});
-
 			marker.addListener("click", function(){
 				info.open(map, marker);
 			})
@@ -171,10 +184,8 @@ for (i = 0; i < coll.length; i++) {
 	</script>
 	<script> 
 	
-
 	var coll = document.getElementsByClassName("collapsible");
 	var i;
-
 	for (i = 0; i < coll.length; i++) {
 	coll[i].addEventListener("click", function() {
 		this.classList.toggle("active");
