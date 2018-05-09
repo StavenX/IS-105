@@ -166,7 +166,24 @@
 			`
 		}
 		box.innerHTML = htmlCode;
+		
+		// Javascript for making the boxes active
+		var coll = document.getElementsByClassName("collapsible");
+		var i;
+
+		for (i = 0; i < coll.length; i++) {
+		coll[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			if (content.style.maxHeight){
+			content.style.maxHeight = null;
+			} else {
+			content.style.maxHeight = content.scrollHeight + "px";
+			} 
+		});
+		}		
 	}
+	
 	function setMarker(latitude, longitude, title = "Test", content = null){
 		var marker = new google.maps.Marker({
 			map: map,
@@ -186,24 +203,6 @@
 		return marker;
 	}
 	</script>
-	<script> 
-	
-	var coll = document.getElementsByClassName("collapsible");
-	var i;
-
-	for (i = 0; i < coll.length; i++) {
-		coll[i].addEventListener("click", function() {
-			this.classList.toggle("active");
-			var content = this.nextElementSibling;
-			if (content.style.maxHeight){
-				content.style.maxHeight = null;
-			} else {
-				content.style.maxHeight = content.scrollHeight + "px";
-			} 
-		});
-	}
-	</script>
-
 
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZ7HKaCO5AQUQ27f6bEEzCnj6rOAhs_NA&callback=init" async defer></script>
 </body>
