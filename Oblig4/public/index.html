@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+    #map {
+      height: 100%;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+	/*73.7496+-10.3280*
+    /* width */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+	
+	</style>
+	<title>Maps</title>
+	<script>
+	if (!String.prototype.format) {
+		String.prototype.format = function() {
+			var args = arguments;
+			return this.replace(/{(\d+)}/g, function(match, number) { 
+			return typeof args[number] != 'undefined'
+				? args[number]
+				: match;
+			});
+		};
+	}
+
+	var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+    });
+}
+	</script>
+</head>
+
+<body id="body">
+
+	<div style="width: 100%; height: 100%; display: table;">
+		<div style="display: table-row">
+			<div style="width: 50%; display: table-cell;" id = "entryBox"></div>
+			
+			<div style="display: table-cell;" id="map"></div>
+		</div>
+	</div>
+	<script>
+	var map, coords, earthquakedata = null;
+
+	function loadData(url, callback){
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", url, true);
+		xhr.responseType = "json";
+		xhr.onload = function(){
+			callback(xhr.response);
+		};
+		xhr.send();
+	}
+
+	loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson", function(data){
+		earthquakedata = data;
+		init();
+		//makeEntryBox();
+	});
+
+	function init(){
+		if (typeof(google) === "undefined" || earthquakedata === null)
+			return;
+
+		var coords = {lat: 0, lng: 0}; // Set default value if no data was found
+		
+		if (earthquakedata.features.length > 0){ // Put the first earthquake data as the main starting point
+			var entry = earthquakedata.features[0];
+			coords.lat = entry.geometry.coordinates[1];
+			coords.lng = entry.geometry.coordinates[0];
+		}
+
+		map = new google.maps.Map(document.getElementById("map"), {
+			center: coords,
+			zoom: 7,
+			disableDefaultUI: true
+		});
+		google.maps.event.addDomListener(window, 'resize', function() {
+    map.setCenter(center);
+}); 
+		// Loop though and make markers
+		for (var i = 0; i < earthquakedata.features.length; i++){
+			var entry = earthquakedata.features[i];
+			setMarker(entry.geometry.coordinates[1],
+					entry.geometry.coordinates[0],
+					entry.properties.title,
+					`
+					<div><b>{0}</b></div>
+					<div>Time: {1}</div>
+					<div>Alert: {2}</div>
+					<div>Magnitude: {3}</div>
+					<a href="{4}">Read more</a>
+					`.format(
+						entry.properties.title,
+						new Date(entry.properties.time).toUTCString(),
+						entry.properties.alert,
+						entry.properties.mag,
+						entry.properties.url
+					));
+		}
+		makeEntryBox();
+	}
+
+	function makeEntryBox() {
+		var box = document.getElementById("entryBox");
+
+		var htmlCode = "";
+		for (var i = 0; i < earthquakedata.features.length; i++) {
+			var entry = earthquakedata.features[i];
+			htmlCode += `
+			<button class="collapsible">{0}</button>
+			<div class="content">
+				<div>${entry.properties.title}</div>
+				<div>${entry.properties.mag}</div>
+				<div>${entry.properties.coordinates}</div>
+			</div>
+			`
+		}
+		box.innerHTML = htmlCode;
+	}
+
+	function setMarker(latitude, longitude, title = "Test", content = null){
+		var marker = new google.maps.Marker({
+			map: map,
+			position: {lat: latitude, lng: longitude},
+			title: title,
+			animation: google.maps.Animation.DROP
+		});
+
+		if (content !== null){
+			var info = new google.maps.InfoWindow({
+				content: content
+			});
+
+			marker.addListener("click", function(){
+				info.open(map, marker);
+			})
+		}
+		
+		return marker;
+	}
+	</script>
+	<script> 
+	
+
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+	coll[i].addEventListener("click", function() {
+		this.classList.toggle("active");
+		var content = this.nextElementSibling;
+		if (content.style.display === "block") {
+		content.style.display = "none";
+		} else {
+		content.style.display = "block";
+		}
+	});
+}
+	</script>
+
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZ7HKaCO5AQUQ27f6bEEzCnj6rOAhs_NA&callback=init" async defer></script>
+</body>
+</html>
