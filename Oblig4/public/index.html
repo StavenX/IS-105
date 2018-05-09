@@ -3,12 +3,20 @@
 <head>
 	<style>
     #map {
-      height: 100%;
+      	height: 100%;
+	  	position: fixed !important;
+	  /*top: 0;
+	  right: 0;
+	  left: 50%;
+	  bottom: 9;*/
+
+		bottom: 0;
+		width: 100%;
     }
     html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
+		height: 100%;
+		margin: 0;
+		padding: 0;
     }
 	/*73.7496+-10.3280*
     /* width */
@@ -61,7 +69,7 @@
 		padding: 0 18px;
 		max-height: 0;
 		overflow: hidden;
-		transition: max-height 0.2s ease-out;
+		transition: max-height 0.1s ease-out;
 		background-color: #f1f1f1;
 	}
 	</style>
@@ -82,9 +90,11 @@
 </head>
 
 <body id="body">
+	
 	<div style="width: 100%; height: 100%; display: table;">
+		<div style="width: 100%; display:block; padding: 0 18px; background-color: rgb(255, 255, 255); color: rgb(46, 46, 46)" id = "headerBox"></div>
 		<div style="display: table-row">
-			<div style="width: 50%; display: table-cell;" id = "entryBox"></div>
+			<div style="width: 40%; display: table-cell;" id = "entryBox"></div>
 			
 			<div style="display: table-cell;" id="map"></div>
 		</div>
@@ -102,10 +112,10 @@
 		xhr.send();
 	}
 
-	loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson", function(data){
+	// Loads the json from the URL given
+	loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson", function(data){
 		earthquakedata = data;
 		init();
-		//makeEntryBox();
 	});
 
 	function init(){
@@ -124,9 +134,10 @@
 			disableDefaultUI: true
 		});
 		google.maps.event.addDomListener(window, 'resize', function() {
-    map.setCenter(center);
-}); 
-		// Loop though and make markers
+    		map.setCenter(center);
+		}); 
+		makeHeaderBox();
+		// Loop through the entries and make markers
 		for (var i = 0; i < earthquakedata.features.length; i++){
 			var entry = earthquakedata.features[i];
 			setMarker(entry.geometry.coordinates[1],
@@ -148,24 +159,49 @@
 		}
 		makeEntryBox();
 	}
-	function makeEntryBox() {
-		var box = document.getElementById("entryBox");
+
+	function makeHeaderBox() {
+		var headerBox = document.getElementById("headerBox");
 		var htmlCode = "";
+	
+			htmlCode += `
+			<div> <center>
+				<h1>Header</h1>
+				<h3> Generated: 		${new Date(earthquakedata.metadata.generated).toUTCString()}</h3>
+				<h3> URL: 			${earthquakedata.metadata.url}</h3>
+				<h3> Title: 			${earthquakedata.metadata.title}</h3>
+				<h3> API: 			${earthquakedata.metadata.api}</h3>
+				<h3> Count: 			${earthquakedata.metadata.count}</h3>
+				<h3> Status: 		${earthquakedata.metadata.status}</h3></center>
+			</div>
+			`		
+		headerBox.innerHTML = htmlCode;
+	}
+
+	// Makes up the structure for collapsible boxes, and makes them clickable 
+	function makeEntryBox() {
+		var entryBox = document.getElementById("entryBox");
+		var htmlCode = "";		
+		
 		for (var i = 0; i < earthquakedata.features.length; i++) {
 			var entry = earthquakedata.features[i];
+
 			htmlCode += `
 			<div>
 				<button class="collapsible">${entry.properties.title}</button>
 				<div class="content">
-					<p>${entry.properties.title}</p>
-					<p>${entry.properties.mag}</p>
-					<p>Longitude: ${entry.geometry.coordinates[0]}</p>
-					<p>Latitude: ${entry.geometry.coordinates[1]}</p>
+					<p>Magnitude:		${entry.properties.mag}</p>
+					<p>Occurred:		${new Date(entry.properties.time).toUTCString()}</p>
+					<p>Last Updated:	${new Date(entry.properties.updated).toUTCString()}</p>
+					<p>Coordinates: 	${entry.geometry.coordinates}</p>
+					<p>Timezone: 		${entry.properties.tz}</p>
+					<center>
+						<a href="	${entry.properties.url}">Read more</a> 
+					</center>					
 				</div>
-			</div>
-			`
+			</div> `
 		}
-		box.innerHTML = htmlCode;
+		entryBox.innerHTML = htmlCode;
 		
 		// Javascript for making the boxes active
 		var coll = document.getElementsByClassName("collapsible");
@@ -184,6 +220,7 @@
 		}		
 	}
 	
+	// Sets markers on the map
 	function setMarker(latitude, longitude, title = "Test", content = null){
 		var marker = new google.maps.Marker({
 			map: map,
@@ -198,8 +235,7 @@
 			marker.addListener("click", function(){
 				info.open(map, marker);
 			})
-		}
-		
+		}		
 		return marker;
 	}
 	</script>
