@@ -156,47 +156,18 @@
 		xhr.send();
 	}
 	var map;
+	
+	loadSpecificURL("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson");
+	
 	// Loads the json from the URL given. This is default page on startup
-	loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson", function(data){
-		earthquakedata = data;
-		init();
-	}
-	);
-
-	function loadDataAllHour() {
+	function loadSpecificURL(url) {
 		// Loads the json from the URL given
-		loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson", function(data){
+		loadData(url, function(data){
 			earthquakedata = data;
 			init();
-		}
+			}
 		);
 	}
-	function loadDataAllDay() {
-		// Loads the json from the URL given
-		loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson", function(data){
-			earthquakedata = data;
-			init();
-		}
-		);
-	}
-	function loadDataAllWeek() {
-		// Loads the json from the URL given
-		loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson", function(data){
-			earthquakedata = data;
-			init();
-		}
-		);
-	}
-	function loadDataAllMonth() {
-		// Loads the json from the URL given
-		loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson", function(data){
-			earthquakedata = data;
-			init();
-		}
-		);
-	}
-
-
 
 	function init(){
 		if (typeof(google) === "undefined" || earthquakedata === null)
@@ -252,21 +223,28 @@
 		var headerBox = document.getElementById("headerBox");
 		var htmlCode = "";
 
-		htmlCode += `
-		<div>
-			<h1>The Amazing Earthquake Site!</h1>
-			<h3> Generated: 	${new Date(earthquakedata.metadata.generated).toUTCString()}</h3>
-			<a href="${earthquakedata.metadata.url}">URL</a>
-			<h3> Title: 		${earthquakedata.metadata.title}</h3>
-			<h3> API: 			${earthquakedata.metadata.api}</h3>
-			<h3> Count: 		${earthquakedata.metadata.count}</h3>
-			<h3> Status: 		${earthquakedata.metadata.status}</h3>
-			<button class="button button1" onclick="loadDataAllHour();">All Hour</button>
-			<button class="button button1" onclick="loadDataAllDay();">All Day</button>
-			<button class="button button1" onclick="loadDataAllWeek();">All Week</button>
-			<button class="button button1" onclick="loadDataAllMonth();">All Month</button>
-		</div>
-		`;
+			htmlCode += `
+			<div>
+				<h1>The Amazing Earthquake Site!</h1>
+				<h3> Title: 		${earthquakedata.metadata.title}</h3>
+				<h3> Generated: 	${new Date(earthquakedata.metadata.generated).toUTCString()}</h3>										
+				<h3> Entries found: ${earthquakedata.metadata.count}</h3>
+				<h3> API: 			${earthquakedata.metadata.api}</h3>
+				<h3> Status: 		${earthquakedata.metadata.status}</h3>
+				<h3> <a href="		${earthquakedata.metadata.url}" target="_blank">URL</a></h3>
+				
+				<h4>Search earthquake data for: </h4>
+				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson');">All - Hour</button>
+				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson');">All - Day</button>
+				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson');">All - Week</button>
+				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson');">All - Month</button>
+
+				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_hour.geojson');">Significant - Hour</button>
+				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_day.geojson');">Significant - Day</button>
+				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson');">Significant - Week</button>
+				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson');">Significant - Month</button>
+			</div>
+			`
 		headerBox.innerHTML = htmlCode;
 	}
 
