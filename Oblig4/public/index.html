@@ -3,11 +3,12 @@
 <head>
 	<style>
     html, body {
+		background-color: #efefef;
 		height: 100%;
 		margin: 0;
 		padding: 0;
     }
-	/*73.7496+-10.3280*
+
     /* width */
     ::-webkit-scrollbar {
         width: 10px;
@@ -93,7 +94,7 @@
 
     #headerBox {
     	padding: 0 15px;
-    	background-color: white;
+    	background-color: #efefef;
     	font-family: Calibri, sans-serif;
     	color: rgb(46, 46, 46);
     }
@@ -113,7 +114,7 @@
 		}
 
 		.viewer > div{
-			
+
 		}
 	}
 	</style>
@@ -156,10 +157,10 @@
 		xhr.send();
 	}
 	var map;
-	
+
 	// Loads the startup page
 	loadSpecificURL("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson");
-	
+
 	// Loads the json from the URL given
 	function loadSpecificURL(url) {
 		loadData(url, function(data){
@@ -232,8 +233,8 @@
 			"metadata": earthquakedata.metadata,
 			"features": []
 		}
-		data.features = find(document.getElementById("searchBar").value, earthquakedata.features);	
-		init(data);	
+		data.features = find(document.getElementById("searchBar").value, earthquakedata.features);
+		init(data);
 	}
 
 	function makeHeaderBox(data) {
@@ -244,16 +245,16 @@
 			<div>
 				<h1>The Amazing Earthquake Site!</h1>
 				<h3> Title: 		${data.metadata.title}</h3>
-				<h3> Generated: 	${new Date(data.metadata.generated).toUTCString()}</h3>										
+				<h3> Generated: 	${new Date(data.metadata.generated).toUTCString()}</h3>
 				<h3> Entries found: ${data.metadata.count}</h3>
 				<h3> API: 			${data.metadata.api}</h3>
 				<h3> Status: 		${data.metadata.status}</h3>
 				<h3> <a href="		${data.metadata.url}" target="_blank">URL</a></h3>
-				
-				
+
+
 				<center>
 				<h4>Search earthquake data for: </h4>
-				<input type='text' placeholder="Search.." id = 'searchBar'></input> 
+				<input type='text' placeholder="Search.." id = 'searchBar'></input>
 				<button onclick = 'onSearch();'>Search</button>
 				<br>
 				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson');">All - Hour</button>
