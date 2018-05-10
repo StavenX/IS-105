@@ -157,25 +157,25 @@
 	}
 	var map;
 	
+	// Loads the startup page
 	loadSpecificURL("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson");
 	
-	// Loads the json from the URL given. This is default page on startup
+	// Loads the json from the URL given
 	function loadSpecificURL(url) {
-		// Loads the json from the URL given
 		loadData(url, function(data){
 			earthquakedata = data;
-			init();
+			init(earthquakedata);
 			}
 		);
 	}
 
-	function init(){
-		if (typeof(google) === "undefined" || earthquakedata === null)
+	function init(data){
+		if (typeof(google) === "undefined" || data === null)
 			return;
 		var coords = {lat: 0, lng: 0}; // Set default value if no data was found
 
-		if (earthquakedata.features.length > 0){ // Put the first earthquake data as the main starting point
-			var entry = earthquakedata.features[0];
+		if (data.features.length > 0){ // Put the first earthquake data as the main starting point
+			var entry = data.features[0];
 			coords.lat = entry.geometry.coordinates[1];
 			coords.lng = entry.geometry.coordinates[0];
 		}
@@ -184,13 +184,11 @@
 			zoom: 7,
 			disableDefaultUI: true
 		});
-		google.maps.event.addDomListener(window, 'resize', function() {
-    		map.setCenter(center);
-		});
-		makeHeaderBox();
+
+		makeHeaderBox(data);
 		// Loop through the entries and make markers
-		for (var i = 0; i < earthquakedata.features.length; i++){
-			var entry = earthquakedata.features[i];
+		for (var i = 0; i < data.features.length; i++){
+			var entry = data.features[i];
 			setMarker(entry.geometry.coordinates[1],
 					entry.geometry.coordinates[0],
 					entry.properties.title,
@@ -209,7 +207,7 @@
 						entry.properties.url
 					));
 		}
-			makeEntryBox();
+			makeEntryBox(data);
 	}
 
 	// Moves the map to the given location
@@ -219,21 +217,45 @@
 		map.panTo(center);
 	}
 
-	function makeHeaderBox() {
+	// Search through entries and returns data that matches
+	function find(srch, data){
+		var newData = [];
+		for (var i = 0; i < data.length; i++){
+			if (data[i].properties.title.toLowerCase().search(srch.toLowerCase()) >= 0)
+				newData[newData.length] = data[i];
+		}
+		return newData;
+	}
+
+	function onSearch() {
+		var data = {
+			"metadata": earthquakedata.metadata,
+			"features": []
+		}
+		data.features = find(document.getElementById("searchBar").value, earthquakedata.features);	
+		init(data);	
+	}
+
+	function makeHeaderBox(data) {
 		var headerBox = document.getElementById("headerBox");
 		var htmlCode = "";
 
 			htmlCode += `
 			<div>
 				<h1>The Amazing Earthquake Site!</h1>
-				<h3> Title: 		${earthquakedata.metadata.title}</h3>
-				<h3> Generated: 	${new Date(earthquakedata.metadata.generated).toUTCString()}</h3>										
-				<h3> Entries found: ${earthquakedata.metadata.count}</h3>
-				<h3> API: 			${earthquakedata.metadata.api}</h3>
-				<h3> Status: 		${earthquakedata.metadata.status}</h3>
-				<h3> <a href="		${earthquakedata.metadata.url}" target="_blank">URL</a></h3>
+				<h3> Title: 		${data.metadata.title}</h3>
+				<h3> Generated: 	${new Date(data.metadata.generated).toUTCString()}</h3>										
+				<h3> Entries found: ${data.metadata.count}</h3>
+				<h3> API: 			${data.metadata.api}</h3>
+				<h3> Status: 		${data.metadata.status}</h3>
+				<h3> <a href="		${data.metadata.url}" target="_blank">URL</a></h3>
 				
+				
+				<center>
 				<h4>Search earthquake data for: </h4>
+				<input type='text' placeholder="Search.." id = 'searchBar'></input> 
+				<button onclick = 'onSearch();'>Search</button>
+				<br>
 				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson');">All - Hour</button>
 				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson');">All - Day</button>
 				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson');">All - Week</button>
@@ -243,19 +265,20 @@
 				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_day.geojson');">Significant - Day</button>
 				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson');">Significant - Week</button>
 				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson');">Significant - Month</button>
+				</center>
 			</div>
 			`
 		headerBox.innerHTML = htmlCode;
 	}
 
 	// Makes up the structure for collapsible boxes, and makes them clickable
-	function makeEntryBox() {
+	function makeEntryBox(data) {
 		var entryBox = document.getElementById("entryBox");
 		var htmlCode = "";
 
 
-		for (var i = 0; i < earthquakedata.features.length; i++) {
-			var entry = earthquakedata.features[i];
+		for (var i = 0; i < data.features.length; i++) {
+			var entry = data.features[i];
 
 			htmlCode += `
 			<div>
