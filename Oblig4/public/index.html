@@ -3,12 +3,20 @@
 <head>
 	<style>
     #map {
-      height: 100%;
+      	height: 100%;
+	  	position: fixed !important;
+	  /*top: 0;
+	  right: 0;
+	  left: 50%;
+	  bottom: 9;*/
+
+		bottom: 0;
+		width: 100%;
     }
     html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
+		height: 100%;
+		margin: 0;
+		padding: 0;
     }
 	/*73.7496+-10.3280*
     /* width */
@@ -27,8 +35,45 @@
     ::-webkit-scrollbar-thumb:hover {
         background: #555;
     }
-	
+
+	/* Styles for the collapsible boxes*/
+	.collapsible {
+		background-color: #777;
+		color: white;
+		cursor: pointer;
+		padding: 18px;
+		width: 100%;
+		border: none;
+		text-align: left;
+		outline: none;
+		font-size: 15px;
+	}
+
+	.active, .collapsible:hover {
+		background-color: #555;
+	}
+
+	.collapsible:after {
+		content: '\002B';
+		color: white;
+		font-weight: bold;
+		float: right;
+		margin-left: 5px;
+	}
+
+	.active:after {
+		content: "\2212";
+	}
+
+	.content {
+		padding: 0 18px;
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height 0.1s ease-out;
+		background-color: #f1f1f1;
+	}
 	</style>
+	
 	<title>Maps</title>
 	<script>
 	if (!String.prototype.format) {
@@ -41,36 +86,22 @@
 			});
 		};
 	}
-
-	var coll = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-            content.style.display = "none";
-        } else {
-            content.style.display = "block";
-        }
-    });
-}
 	</script>
 </head>
 
 <body id="body">
-
+	
 	<div style="width: 100%; height: 100%; display: table;">
+		<div style="width: 100%; display:block; padding: 0 15px; background-color: white; color: rgb(46, 46, 46)" id = "headerBox"></div>
 		<div style="display: table-row">
-			<div style="width: 50%; display: table-cell;" id = "entryBox"></div>
+			<div style="width: 40%; display: table-cell;" id = "entryBox"></div>
 			
 			<div style="display: table-cell;" id="map"></div>
 		</div>
 	</div>
+
 	<script>
 	var map, coords, earthquakedata = null;
-
 	function loadData(url, callback){
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", url, true);
@@ -81,16 +112,49 @@ for (i = 0; i < coll.length; i++) {
 		xhr.send();
 	}
 
-	loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson", function(data){
+	// Loads the json from the URL given. This is default page on startup
+	loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson", function(data){
 		earthquakedata = data;
 		init();
-		//makeEntryBox();
-	});
+	}
+	);
+
+	function loadDataAllHour() {
+		// Loads the json from the URL given
+		loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson", function(data){
+			earthquakedata = data;
+			init();
+		}
+		);
+	}
+	function loadDataAllDay() {
+		// Loads the json from the URL given
+		loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson", function(data){
+			earthquakedata = data;
+			init();
+		}
+		);
+	}
+	function loadDataAllWeek() {
+		// Loads the json from the URL given
+		loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson", function(data){
+			earthquakedata = data;
+			init();
+		}
+		);
+	}
+	function loadDataAllMonth() {
+		// Loads the json from the URL given
+		loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson", function(data){
+			earthquakedata = data;
+			init();
+		}
+		);
+	}
 
 	function init(){
 		if (typeof(google) === "undefined" || earthquakedata === null)
 			return;
-
 		var coords = {lat: 0, lng: 0}; // Set default value if no data was found
 		
 		if (earthquakedata.features.length > 0){ // Put the first earthquake data as the main starting point
@@ -98,16 +162,16 @@ for (i = 0; i < coll.length; i++) {
 			coords.lat = entry.geometry.coordinates[1];
 			coords.lng = entry.geometry.coordinates[0];
 		}
-
 		map = new google.maps.Map(document.getElementById("map"), {
 			center: coords,
 			zoom: 7,
 			disableDefaultUI: true
 		});
 		google.maps.event.addDomListener(window, 'resize', function() {
-    map.setCenter(center);
-}); 
-		// Loop though and make markers
+    		map.setCenter(center);
+		}); 
+		makeHeaderBox();
+		// Loop through the entries and make markers
 		for (var i = 0; i < earthquakedata.features.length; i++){
 			var entry = earthquakedata.features[i];
 			setMarker(entry.geometry.coordinates[1],
@@ -130,24 +194,72 @@ for (i = 0; i < coll.length; i++) {
 		makeEntryBox();
 	}
 
-	function makeEntryBox() {
-		var box = document.getElementById("entryBox");
-
+	function makeHeaderBox() {
+		var headerBox = document.getElementById("headerBox");
 		var htmlCode = "";
-		for (var i = 0; i < earthquakedata.features.length; i++) {
-			var entry = earthquakedata.features[i];
+	
 			htmlCode += `
-			<button class="collapsible">{0}</button>
-			<div class="content">
-				<div>${entry.properties.title}</div>
-				<div>${entry.properties.mag}</div>
-				<div>${entry.properties.coordinates}</div>
+			
+			<div> 
+				<h1>Header</h1>
+				<h3> Generated: 	${new Date(earthquakedata.metadata.generated).toUTCString()}</h3>
+				<h3> URL: 			${earthquakedata.metadata.url}</h3>
+				<h3> Title: 		${earthquakedata.metadata.title}</h3>
+				<h3> API: 			${earthquakedata.metadata.api}</h3>
+				<h3> Count: 		${earthquakedata.metadata.count}</h3>
+				<h3> Status: 		${earthquakedata.metadata.status}</h3>
+				<input id="clickMe" type="button" value="All Hour" onclick="loadDataAllHour();" />
+				<input id="clickMe" type="button" value="All Day" onclick="loadDataAllDay();" />
+				<input id="clickMe" type="button" value="All Week" onclick="loadDataAllWeek();" />
+				<input id="clickMe" type="button" value="All Month" onclick="loadDataAllMonth();" />
 			</div>
-			`
-		}
-		box.innerHTML = htmlCode;
+			`		
+		headerBox.innerHTML = htmlCode;
 	}
 
+	// Makes up the structure for collapsible boxes, and makes them clickable 
+	function makeEntryBox() {
+		var entryBox = document.getElementById("entryBox");
+		var htmlCode = "";		
+		
+		for (var i = 0; i < earthquakedata.features.length; i++) {
+			var entry = earthquakedata.features[i];
+
+			htmlCode += `
+			<div>
+				<button class="collapsible">${entry.properties.title}</button>
+				<div class="content">
+					<p>Magnitude:		${entry.properties.mag}</p>
+					<p>Occurred:		${new Date(entry.properties.time).toUTCString()}</p>
+					<p>Last Updated:	${new Date(entry.properties.updated).toUTCString()}</p>
+					<p>Coordinates: 	${entry.geometry.coordinates}</p>
+					<p>Timezone: 		${entry.properties.tz}</p>
+					<center>
+						<a href="	${entry.properties.url}">Read more</a> 
+					</center>					
+				</div>
+			</div> `
+		}
+		entryBox.innerHTML = htmlCode;
+		
+		// Javascript for making the boxes active
+		var coll = document.getElementsByClassName("collapsible");
+		var i;
+
+		for (i = 0; i < coll.length; i++) {
+		coll[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			if (content.style.maxHeight){
+			content.style.maxHeight = null;
+			} else {
+			content.style.maxHeight = content.scrollHeight + "px";
+			} 
+		});
+		}		
+	}
+	
+	// Sets markers on the map
 	function setMarker(latitude, longitude, title = "Test", content = null){
 		var marker = new google.maps.Marker({
 			map: map,
@@ -155,39 +267,17 @@ for (i = 0; i < coll.length; i++) {
 			title: title,
 			animation: google.maps.Animation.DROP
 		});
-
 		if (content !== null){
 			var info = new google.maps.InfoWindow({
 				content: content
 			});
-
 			marker.addListener("click", function(){
 				info.open(map, marker);
 			})
-		}
-		
+		}		
 		return marker;
 	}
 	</script>
-	<script> 
-	
-
-	var coll = document.getElementsByClassName("collapsible");
-	var i;
-
-	for (i = 0; i < coll.length; i++) {
-	coll[i].addEventListener("click", function() {
-		this.classList.toggle("active");
-		var content = this.nextElementSibling;
-		if (content.style.display === "block") {
-		content.style.display = "none";
-		} else {
-		content.style.display = "block";
-		}
-	});
-}
-	</script>
-
 
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZ7HKaCO5AQUQ27f6bEEzCnj6rOAhs_NA&callback=init" async defer></script>
 </body>
