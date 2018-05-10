@@ -2,10 +2,11 @@
 <html>
 <head>
 	<style>
-    html, body {
+    body {
 		height: 100%;
 		margin: 0;
 		padding: 0;
+		font-family: Calibri, sans-serif;
     }
 	/*73.7496+-10.3280*
     /* width */
@@ -72,6 +73,10 @@
 		padding: 1px 6px;
 	}
 
+	.button.focus {
+		border: 2px solid #009;
+	}
+
 	#main {
 		height: 100%;
 	}
@@ -94,9 +99,18 @@
     #headerBox {
     	padding: 0 15px;
     	background-color: white;
-    	font-family: Calibri, sans-serif;
     	color: rgb(46, 46, 46);
     }
+
+	.title {
+		text-align: center;
+		width : 100%;
+		background: #222;
+		color: white;
+		font-size: 40px;
+		padding: 0;
+
+	}
 
 	@media only screen and (max-width: 900px) {
 		#main > div{
@@ -137,7 +151,25 @@
 	<div id="main">
 		<div class="viewer">
 			<div>
-				<div id="headerBox"></div>
+				<div class="title">The Amazing Earthquake Site!</div>
+				<div id="headerBox">	
+					<div id="header"></div>
+					<center>
+						<h4>Search earthquake data for: </h4>
+						<input type="text" placeholder="Search.." id="searchBar"></input>
+						<button onclick="onSearch();">Search</button>
+						<br>
+						<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson');setfocus(this);">All - Hour</button>
+						<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson');setfocus(this);">All - Day</button>
+						<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson');setfocus(this);">All - Week</button>
+						<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson');setfocus(this);">All - Month</button>
+
+						<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_hour.geojson');setfocus(this);">Significant - Hour</button>
+						<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_day.geojson');setfocus(this);">Significant - Day</button>
+						<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson');setfocus(this);">Significant - Week</button>
+						<button class="button button1 focus" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson');setfocus(this);">Significant - Month</button>
+					</center>
+				</div>
 				<div id="entryBox"></div>
 			</div>
 		</div>
@@ -169,8 +201,22 @@
 		);
 	}
 
+	function setfocus(button){
+		var lastFocus = document.getElementsByClassName("focus")[0];
+
+		if (typeof(lastFocus) !== "undefined")
+			lastFocus.className = lastFocus.className.replace("focus", "");
+
+		button.className += " focus";
+	}
+
+	function googleInit(){
+		if (typeof(earthquakedata) !== "undefined")
+			init(earthquakedata);
+	}
+
 	function init(data){
-		if (typeof(google) === "undefined" || data === null)
+		if (typeof(google) === "undefined" || typeof(data) === "undefined")
 			return;
 		var coords = {lat: 0, lng: 0}; // Set default value if no data was found
 
@@ -206,6 +252,17 @@
 						entry.properties.mag,
 						entry.properties.url
 					));
+			// Add the circle for this city to the map.
+			var entryCircle = new google.maps.Circle({
+				strokeColor: '#FF0000',
+				strokeOpacity: 0.8,
+				strokeWeight: 2,
+				fillColor: '#FF0000',
+				fillOpacity: 0.35,
+				map: map,
+				center: {lat: entry.geometry.coordinates[1], lng: entry.geometry.coordinates[0]},
+				radius: Math.pow(2, entry.properties.mag) / 2 * 10000
+            });
 		}
 			makeEntryBox(data);
 	}
@@ -236,39 +293,28 @@
 		init(data);	
 	}
 
+	document.getElementById("searchBar").addEventListener("keyup", function(event) {
+		event.preventDefault();
+		if (event.keyCode === 13) {
+			onSearch();
+		}
+	});
+
 	function makeHeaderBox(data) {
-		var headerBox = document.getElementById("headerBox");
+		var header = document.getElementById("header");
 		var htmlCode = "";
 
 			htmlCode += `
 			<div>
-				<h1>The Amazing Earthquake Site!</h1>
 				<h3> Title: 		${data.metadata.title}</h3>
 				<h3> Generated: 	${new Date(data.metadata.generated).toUTCString()}</h3>										
 				<h3> Entries found: ${data.metadata.count}</h3>
 				<h3> API: 			${data.metadata.api}</h3>
 				<h3> Status: 		${data.metadata.status}</h3>
 				<h3> <a href="		${data.metadata.url}" target="_blank">URL</a></h3>
-				
-				
-				<center>
-				<h4>Search earthquake data for: </h4>
-				<input type='text' placeholder="Search.." id = 'searchBar'></input> 
-				<button onclick = 'onSearch();'>Search</button>
-				<br>
-				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson');">All - Hour</button>
-				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson');">All - Day</button>
-				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson');">All - Week</button>
-				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson');">All - Month</button>
-
-				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_hour.geojson');">Significant - Hour</button>
-				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_day.geojson');">Significant - Day</button>
-				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson');">Significant - Week</button>
-				<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson');">Significant - Month</button>
-				</center>
 			</div>
 			`
-		headerBox.innerHTML = htmlCode;
+		header.innerHTML = htmlCode;
 	}
 
 	// Makes up the structure for collapsible boxes, and makes them clickable
@@ -335,6 +381,6 @@
 	}
 	</script>
 
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZ7HKaCO5AQUQ27f6bEEzCnj6rOAhs_NA&callback=init" async defer></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZ7HKaCO5AQUQ27f6bEEzCnj6rOAhs_NA&callback=googleInit"></script>
 </body>
 </html>
