@@ -92,7 +92,7 @@
 <body id="body">
 	
 	<div style="width: 100%; height: 100%; display: table;">
-		<div style="width: 100%; display:block; padding: 0 18px; background-color: rgb(255, 255, 255); color: rgb(46, 46, 46)" id = "headerBox"></div>
+		<div style="width: 100%; display:block; padding: 0 15px; background-color: white; color: rgb(46, 46, 46)" id = "headerBox"></div>
 		<div style="display: table-row">
 			<div style="width: 40%; display: table-cell;" id = "entryBox"></div>
 			
@@ -112,11 +112,45 @@
 		xhr.send();
 	}
 
-	// Loads the json from the URL given
+	// Loads the json from the URL given. This is default page on startup
 	loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson", function(data){
 		earthquakedata = data;
 		init();
-	});
+	}
+	);
+
+	function loadDataAllHour() {
+		// Loads the json from the URL given
+		loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson", function(data){
+			earthquakedata = data;
+			init();
+		}
+		);
+	}
+	function loadDataAllDay() {
+		// Loads the json from the URL given
+		loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson", function(data){
+			earthquakedata = data;
+			init();
+		}
+		);
+	}
+	function loadDataAllWeek() {
+		// Loads the json from the URL given
+		loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson", function(data){
+			earthquakedata = data;
+			init();
+		}
+		);
+	}
+	function loadDataAllMonth() {
+		// Loads the json from the URL given
+		loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson", function(data){
+			earthquakedata = data;
+			init();
+		}
+		);
+	}
 
 	function init(){
 		if (typeof(google) === "undefined" || earthquakedata === null)
@@ -165,14 +199,19 @@
 		var htmlCode = "";
 	
 			htmlCode += `
-			<div> <center>
+			
+			<div> 
 				<h1>Header</h1>
-				<h3> Generated: 		${new Date(earthquakedata.metadata.generated).toUTCString()}</h3>
+				<h3> Generated: 	${new Date(earthquakedata.metadata.generated).toUTCString()}</h3>
 				<h3> URL: 			${earthquakedata.metadata.url}</h3>
-				<h3> Title: 			${earthquakedata.metadata.title}</h3>
+				<h3> Title: 		${earthquakedata.metadata.title}</h3>
 				<h3> API: 			${earthquakedata.metadata.api}</h3>
-				<h3> Count: 			${earthquakedata.metadata.count}</h3>
-				<h3> Status: 		${earthquakedata.metadata.status}</h3></center>
+				<h3> Count: 		${earthquakedata.metadata.count}</h3>
+				<h3> Status: 		${earthquakedata.metadata.status}</h3>
+				<input id="clickMe" type="button" value="All Hour" onclick="loadDataAllHour();" />
+				<input id="clickMe" type="button" value="All Day" onclick="loadDataAllDay();" />
+				<input id="clickMe" type="button" value="All Week" onclick="loadDataAllWeek();" />
+				<input id="clickMe" type="button" value="All Month" onclick="loadDataAllMonth();" />
 			</div>
 			`		
 		headerBox.innerHTML = htmlCode;
