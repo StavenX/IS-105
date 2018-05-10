@@ -5,13 +5,13 @@
     #map {
 		height: 100%;
       	position: fixed !important;
-		right: 500; 
+		right: 500;
 
     /*top: 0;
     right: 0;
     left: 50%;
     bottom: 9;*/
- 
+
     bottom: 0;
     width: 100%;
     }
@@ -75,13 +75,13 @@
 		background-color: #f1f1f1;
 	}
 	</style>
-	
+
 	<title>Maps</title>
 	<script>
 	if (!String.prototype.format) {
 		String.prototype.format = function() {
 			var args = arguments;
-			return this.replace(/{(\d+)}/g, function(match, number) { 
+			return this.replace(/{(\d+)}/g, function(match, number) {
 			return typeof args[number] != 'undefined'
 				? args[number]
 				: match;
@@ -92,18 +92,18 @@
 </head>
 
 <body id="body">
-	
+
 	<div style="width: 100%; height: 100%; display: table;">
 		<div style="width: 100%; display:block; padding: 0 15px; background-color: white; color: rgb(46, 46, 46)" id = "headerBox"></div>
 		<div style="display: table-row">
 			<div style="width: 50%; display: table-cell;" id = "entryBox"></div>
 			<div style="display: table-cell; width: 50% " id="map"></div>
-			
+
 		</div>
 	</div>
 
 	<script>
-	
+
 	var map, coords, earthquakedata = null;
 	function loadData(url, callback){
 		var xhr = new XMLHttpRequest();
@@ -114,7 +114,7 @@
 		};
 		xhr.send();
 	}
-	var map; 
+	var map;
 	// Loads the json from the URL given. This is default page on startup
 	loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson", function(data){
 		earthquakedata = data;
@@ -155,13 +155,13 @@
 		);
 	}
 
-	
+
 
 	function init(){
 		if (typeof(google) === "undefined" || earthquakedata === null)
 			return;
 		var coords = {lat: 0, lng: 0}; // Set default value if no data was found
-		
+
 		if (earthquakedata.features.length > 0){ // Put the first earthquake data as the main starting point
 			var entry = earthquakedata.features[0];
 			coords.lat = entry.geometry.coordinates[1];
@@ -174,7 +174,7 @@
 		});
 		google.maps.event.addDomListener(window, 'resize', function() {
     		map.setCenter(center);
-		}); 
+		});
 		makeHeaderBox();
 		// Loop through the entries and make markers
 		for (var i = 0; i < earthquakedata.features.length; i++){
@@ -188,7 +188,7 @@
 					<div>Alert: {2}</div>
 					<div>Magnitude: {3}</div>
 					<a href="{4}" target="_blank">Read more</a>
-					
+
 					`.format(
 						entry.properties.title,
 						new Date(entry.properties.time).toUTCString(),
@@ -210,30 +210,32 @@
 	function makeHeaderBox() {
 		var headerBox = document.getElementById("headerBox");
 		var htmlCode = "";
-	
+
 			htmlCode += `
-			
-			<div> 
-				<h1>Header</h1>
+			<style>
+			.button{border-radius: 12px; background-color: #dbdbdb; color: rgb(46, 46, 46); border: none;}
+			</style>
+			<div>
+				<h1>The Amazing Earthquake Site!</h1>
 				<h3> Generated: 	${new Date(earthquakedata.metadata.generated).toUTCString()}</h3>
 				<h3> URL: 			${earthquakedata.metadata.url}</h3>
 				<h3> Title: 		${earthquakedata.metadata.title}</h3>
 				<h3> API: 			${earthquakedata.metadata.api}</h3>
 				<h3> Count: 		${earthquakedata.metadata.count}</h3>
 				<h3> Status: 		${earthquakedata.metadata.status}</h3>
-				<input id="clickMe" type="button" value="All Hour" onclick="loadDataAllHour();" />
-				<input id="clickMe" type="button" value="All Day" onclick="loadDataAllDay();" />
-				<input id="clickMe" type="button" value="All Week" onclick="loadDataAllWeek();" />
-				<input id="clickMe" type="button" value="All Month" onclick="loadDataAllMonth();" />
+				<button class="button button1" onclick="loadDataAllHour();">All Hour</button>
+				<button class="button button1" onclick="loadDataAllDay();">All Day</button>
+				<button class="button button1" onclick="loadDataAllWeek();">All Week</button>
+				<button class="button button1" onclick="loadDataAllMonth();">All Month</button>
 			</div>
-			`		
+			`
 		headerBox.innerHTML = htmlCode;
 	}
 
-	// Makes up the structure for collapsible boxes, and makes them clickable 
+	// Makes up the structure for collapsible boxes, and makes them clickable
 	function makeEntryBox() {
 		var entryBox = document.getElementById("entryBox");
-		var htmlCode = "";		
+		var htmlCode = "";
 
 
 		for (var i = 0; i < earthquakedata.features.length; i++) {
@@ -249,14 +251,14 @@
 					<p>Coordinates: 	${entry.geometry.coordinates}</p>
 					<p>Timezone: 		${entry.properties.tz}</p>
 					<center>
-						<a href="${entry.properties.url}" target="_blank">Read more</a> 
+						<a href="${entry.properties.url}" target="_blank">Read more</a>
 						<input id="clickMe" type="button" value="Show on map" onclick="moveMapToLocation(${entry.geometry.coordinates[1]},${entry.geometry.coordinates[0]});" />
-					</center>					
+					</center>
 				</div>
 			</div> `
 		}
 		entryBox.innerHTML = htmlCode;
-		
+
 		// Javascript for making the boxes active
 		var coll = document.getElementsByClassName("collapsible");
 		var i;
@@ -269,11 +271,11 @@
 				content.style.maxHeight = null;
 			} else {
 				content.style.maxHeight = content.scrollHeight + "px";
-			} 
+			}
 		});
-		}		
+		}
 	}
-	
+
 	// Sets markers on the map
 	function setMarker(latitude, longitude, title = "Test", content = null){
 		var marker = new google.maps.Marker({
@@ -289,7 +291,7 @@
 			marker.addListener("click", function(){
 				info.open(map, marker);
 			})
-		}		
+		}
 		return marker;
 	}
 	</script>
