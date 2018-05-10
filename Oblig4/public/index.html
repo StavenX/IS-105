@@ -2,19 +2,6 @@
 <html>
 <head>
 	<style>
-    #map {
-		height: 100%;
-      	position: fixed !important;
-		right: 500;
-
-    /*top: 0;
-    right: 0;
-    left: 50%;
-    bottom: 9;*/
-
-    bottom: 0;
-    width: 100%;
-    }
     html, body {
 		height: 100%;
 		margin: 0;
@@ -74,6 +61,61 @@
 		transition: max-height 0.1s ease-out;
 		background-color: #f1f1f1;
 	}
+
+	.button, a {
+		border-radius: 12px;
+		background-color: #dbdbdb;
+		color: rgb(46, 46, 46);
+		border: none;
+		text-decoration: none;
+		cursor: pointer;
+		padding: 1px 6px;
+	}
+
+	#main {
+		height: 100%;
+	}
+
+	#main > div{
+    	height: 100%;
+    	width: 50%;
+    }
+
+	#map {
+		position: fixed !important;
+		right: 0px;
+		top: 0px;
+    }
+
+    .viewer {
+    	overflow: overlay;
+    }
+
+    #headerBox {
+    	padding: 0 15px;
+    	background-color: white;
+    	font-family: Calibri, sans-serif;
+    	color: rgb(46, 46, 46);
+    }
+
+	@media only screen and (max-width: 900px) {
+		#main > div{
+	    	height: 50%;
+	    	width: 100%;
+	    }
+
+		#map {
+	    	width:100%;
+			height:50%;
+			right:0px;
+			bottom:0px;
+			top: unset;
+		}
+
+		.viewer > div{
+			
+		}
+	}
 	</style>
 
 	<title>Maps</title>
@@ -91,19 +133,18 @@
 	</script>
 </head>
 
-<body id="body">
-
-	<div style="width: 100%; height: 100%; display: table;">
-		<div style="width: 100%; display:block; padding: 0 15px; background-color: white; font-family: Calibri, sans-serif; color: rgb(46, 46, 46)" id = "headerBox"></div>
-		<div style="display: table-row">
-			<div style="width: 50%; display: table-cell;" id = "entryBox"></div>
-			<div style="display: table-cell; width: 50% " id="map"></div>
-
+<body>
+	<div id="main">
+		<div class="viewer">
+			<div>
+				<div id="headerBox"></div>
+				<div id="entryBox"></div>
+			</div>
 		</div>
+		<div id="map"></div>
 	</div>
 
 	<script>
-
 	var map, coords, earthquakedata = null;
 	function loadData(url, callback){
 		var xhr = new XMLHttpRequest();
@@ -211,24 +252,21 @@
 		var headerBox = document.getElementById("headerBox");
 		var htmlCode = "";
 
-			htmlCode += `
-			<style>
-			.button{border-radius: 12px; background-color: #dbdbdb; color: rgb(46, 46, 46); border: none;}
-			</style>
-			<div>
-				<h1>The Amazing Earthquake Site!</h1>
-				<h3> Generated: 	${new Date(earthquakedata.metadata.generated).toUTCString()}</h3>
-				<h3> URL: 			${earthquakedata.metadata.url}</h3>
-				<h3> Title: 		${earthquakedata.metadata.title}</h3>
-				<h3> API: 			${earthquakedata.metadata.api}</h3>
-				<h3> Count: 		${earthquakedata.metadata.count}</h3>
-				<h3> Status: 		${earthquakedata.metadata.status}</h3>
-				<button class="button button1" onclick="loadDataAllHour();">All Hour</button>
-				<button class="button button1" onclick="loadDataAllDay();">All Day</button>
-				<button class="button button1" onclick="loadDataAllWeek();">All Week</button>
-				<button class="button button1" onclick="loadDataAllMonth();">All Month</button>
-			</div>
-			`
+		htmlCode += `
+		<div>
+			<h1>The Amazing Earthquake Site!</h1>
+			<h3> Generated: 	${new Date(earthquakedata.metadata.generated).toUTCString()}</h3>
+			<a href="${earthquakedata.metadata.url}">URL</a>
+			<h3> Title: 		${earthquakedata.metadata.title}</h3>
+			<h3> API: 			${earthquakedata.metadata.api}</h3>
+			<h3> Count: 		${earthquakedata.metadata.count}</h3>
+			<h3> Status: 		${earthquakedata.metadata.status}</h3>
+			<button class="button button1" onclick="loadDataAllHour();">All Hour</button>
+			<button class="button button1" onclick="loadDataAllDay();">All Day</button>
+			<button class="button button1" onclick="loadDataAllWeek();">All Week</button>
+			<button class="button button1" onclick="loadDataAllMonth();">All Month</button>
+		</div>
+		`;
 		headerBox.innerHTML = htmlCode;
 	}
 
@@ -242,9 +280,6 @@
 			var entry = earthquakedata.features[i];
 
 			htmlCode += `
-			<style>
-			.button{border-radius: 12px; background-color: #dbdbdb; color: rgb(46, 46, 46); border: none;}
-			</style>
 			<div>
 				<button class="collapsible">${entry.properties.title}</button>
 				<div class="content">
