@@ -242,6 +242,9 @@
 			var entry = earthquakedata.features[i];
 
 			htmlCode += `
+			<style>
+			.button{border-radius: 12px; background-color: #dbdbdb; color: rgb(46, 46, 46); border: none;}
+			</style>
 			<div>
 				<button class="collapsible">${entry.properties.title}</button>
 				<div class="content">
@@ -252,7 +255,7 @@
 					<p>Timezone: 		${entry.properties.tz}</p>
 					<center>
 						<a href="${entry.properties.url}" target="_blank">Read more</a>
-						<input id="clickMe" type="button" value="Show on map" onclick="moveMapToLocation(${entry.geometry.coordinates[1]},${entry.geometry.coordinates[0]});" />
+						<button class="button button1" onclick="moveMapToLocation(${entry.geometry.coordinates[1]},${entry.geometry.coordinates[0]});">Show on map</button>
 					</center>
 				</div>
 			</div> `
