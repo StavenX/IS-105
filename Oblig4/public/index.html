@@ -182,7 +182,8 @@
 					<div>Time: {1}</div>
 					<div>Alert: {2}</div>
 					<div>Magnitude: {3}</div>
-					<a href="{4}">Read more</a>
+					<a href="{4}" target="_blank">Read more</a>
+					
 					`.format(
 						entry.properties.title,
 						new Date(entry.properties.time).toUTCString(),
@@ -235,7 +236,7 @@
 					<p>Coordinates: 	${entry.geometry.coordinates}</p>
 					<p>Timezone: 		${entry.properties.tz}</p>
 					<center>
-						<a href="	${entry.properties.url}">Read more</a> 
+						<a href="${entry.properties.url}" target="_blank">Read more</a> 
 					</center>					
 				</div>
 			</div> `
