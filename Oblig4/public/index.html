@@ -3,15 +3,17 @@
 <head>
 	<style>
     #map {
-      	height: 100%;
-	  	position: fixed !important;
-	  /*top: 0;
-	  right: 0;
-	  left: 50%;
-	  bottom: 9;*/
+		height: 100%;
+      	position: fixed !important;
+		right: 500; 
 
-		bottom: 0;
-		width: 100%;
+    /*top: 0;
+    right: 0;
+    left: 50%;
+    bottom: 9;*/
+ 
+    bottom: 0;
+    width: 100%;
     }
     html, body {
 		height: 100%;
@@ -95,12 +97,13 @@
 		<div style="width: 100%; display:block; padding: 0 15px; background-color: white; color: rgb(46, 46, 46)" id = "headerBox"></div>
 		<div style="display: table-row">
 			<div style="width: 40%; display: table-cell;" id = "entryBox"></div>
+			<div style="display: table-cell; width: 60% " id="map"></div>
 			
-			<div style="display: table-cell;" id="map"></div>
 		</div>
 	</div>
 
 	<script>
+	
 	var map, coords, earthquakedata = null;
 	function loadData(url, callback){
 		var xhr = new XMLHttpRequest();
@@ -111,7 +114,7 @@
 		};
 		xhr.send();
 	}
-
+	var map; 
 	// Loads the json from the URL given. This is default page on startup
 	loadData("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson", function(data){
 		earthquakedata = data;
@@ -151,6 +154,8 @@
 		}
 		);
 	}
+
+	
 
 	function init(){
 		if (typeof(google) === "undefined" || earthquakedata === null)
@@ -192,7 +197,14 @@
 						entry.properties.url
 					));
 		}
-		makeEntryBox();
+			makeEntryBox();
+	}
+
+	// Moves the map to the given location
+	function moveMapToLocation(long, lat) {
+		var center = new google.maps.LatLng(long, lat);
+		// using global variable:
+		map.panTo(center);
 	}
 
 	function makeHeaderBox() {
@@ -222,7 +234,8 @@
 	function makeEntryBox() {
 		var entryBox = document.getElementById("entryBox");
 		var htmlCode = "";		
-		
+
+
 		for (var i = 0; i < earthquakedata.features.length; i++) {
 			var entry = earthquakedata.features[i];
 
@@ -237,6 +250,7 @@
 					<p>Timezone: 		${entry.properties.tz}</p>
 					<center>
 						<a href="${entry.properties.url}" target="_blank">Read more</a> 
+						<input id="clickMe" type="button" value="Show on map" onclick="moveMapToLocation(${entry.geometry.coordinates[1]},${entry.geometry.coordinates[0]});" />
 					</center>					
 				</div>
 			</div> `
@@ -252,9 +266,9 @@
 			this.classList.toggle("active");
 			var content = this.nextElementSibling;
 			if (content.style.maxHeight){
-			content.style.maxHeight = null;
+				content.style.maxHeight = null;
 			} else {
-			content.style.maxHeight = content.scrollHeight + "px";
+				content.style.maxHeight = content.scrollHeight + "px";
 			} 
 		});
 		}		
