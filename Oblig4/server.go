@@ -6,12 +6,7 @@ import (
 	"time"
 	"io/ioutil"
 	"encoding/json"
-	"html/template"
-	"log"
 )
-
-// API key for Google Maps embedding on website
-var apiKey = "AIzaSyCZ7HKaCO5AQUQ27f6bEEzCnj6rOAhs_NA"
 
 // ----------------------------
 
@@ -77,10 +72,9 @@ var entries Earthquakes
 var header Header
 
 // ----------------------------
-var InvalidData bool
+
 // Excecuting things happens here
 func main() {
-	InvalidData = false
  	openServer()
 }
 
@@ -119,34 +113,17 @@ func GetJson(_url string) error {
 		fmt.Println("JSON header unmarshal error.")
 	}
 
-	//fmt.Printf("Amount of earthquakes: %d\n", len(entries.Earthquakes))
-
-	// Prints for earthquake information
-	//PrintHeaderToConsole()
-	//PrintEarthquakesToConsole()
 	return jsonerr
-}
-
-func renderTemplate(w http.ResponseWriter, page *Header){
-	t, err := template.ParseFiles("noe.html")
-	if err != nil{
-		log.Fatal(err)
-	}
-	if !InvalidData {
-		t.Execute(w, page)
-	} else {
-		fmt.Fprintf(w, "test")
-	}
-
 }
 
 // Opens a server on the given port. Will greet the user on a default path
 func openServer() {
 
-	// Handles every "/" request. Also works on other "/"
-	// that are not handled.
-	http.HandleFunc("/", 	printHello)
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./public"))))
+	/* Handles every "/" request. Also works on other "/" that are not handled.*/
+	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("./public"))))
+	http.HandleFunc("/", printHello)
+	//http.HandleFunc("/map", test)
+	//http.HandleFunc("/smth/", smthHandler)
 
 	// Handler for the individual pages we have selected.
 	http.HandleFunc("/1", 	PrintEarthquakesToServerAllHOUR)
@@ -158,10 +135,31 @@ func openServer() {
 	http.ListenAndServe(":8080", nil)
 }
 
-// Prints hello to the client
 func printHello(writer http.ResponseWriter, request *http.Request) {
-	fmt.Fprintln(writer, "Hello client")
+	fmt.Fprint(writer, "Hello");
 }
+
+func test(writer http.ResponseWriter, request *http.Request) {
+	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("./public"))))
+}
+
+/*
+func smthHandler(w http.ResponseWriter, r *http.Request) {
+	if (r.URL.Path != "/") || (r.URL.Path != "/1") || (r.URL.Path != "/2") || (r.URL.Path != "/3") || (r.URL.Path != "/4") {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+	fmt.Fprint(w, "Error")
+}
+
+func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
+	w.WriteHeader(status)
+	if status == http.StatusNotFound {
+		fmt.Fprint(w, "custom 404")
+	}
+}
+*/
+
 // Takes Unix time as parameter, and returns time in a readable format
 func getUnixAsReadable(_time int64) time.Time  {
 	t := time.Unix((
@@ -171,7 +169,7 @@ func getUnixAsReadable(_time int64) time.Time  {
 	return t
 }
 
-// Prints the JSON header to the server (webpage)
+// Prints the JSON header to the server
 func PrintHeaderToServer(writer http.ResponseWriter, request *http.Request) {
 	fmt.Fprintln(writer, "----------------------------------------------------------------")
 	fmt.Fprintln(writer, "Type: ", header.Type)

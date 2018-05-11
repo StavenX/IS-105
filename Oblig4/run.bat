@@ -1,2 +1,3 @@
-go run test.go
+go run server.go
+
 pause
