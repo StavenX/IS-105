@@ -86,7 +86,7 @@ func main() {
 
 // Uses an URL as parameter for the getJson. Works only on URL's from
 // https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
-func getJson(_url string) {
+func GetJson(_url string) error {
 
 	url := _url
 
@@ -122,8 +122,9 @@ func getJson(_url string) {
 	//fmt.Printf("Amount of earthquakes: %d\n", len(entries.Earthquakes))
 
 	// Prints for earthquake information
-	PrintHeaderToConsole()
-	PrintEarthquakesToConsole()
+	//PrintHeaderToConsole()
+	//PrintEarthquakesToConsole()
+	return jsonerr
 }
 
 func renderTemplate(w http.ResponseWriter, page *Header){
@@ -284,28 +285,28 @@ func PrintEarthquakesToConsole() {
 
 // Print earthquake data to the server console
 func PrintEarthquakesToServerAllHOUR(writer http.ResponseWriter, request *http.Request,) {
-	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
+	GetJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
 	PrintHeaderToServer(writer,request)
 	PrintEarthquakeInformation(writer)
 }
 
 // Print earthquake data to the server console
 func PrintEarthquakesToServerAllDAY(writer http.ResponseWriter, request *http.Request,) {
-	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson")
+	GetJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson")
 	PrintHeaderToServer(writer,request)
 	PrintEarthquakeInformation(writer)
 }
 
 // Print earthquake data to the server console
 func PrintEarthquakesToServerAllWeek(writer http.ResponseWriter, request *http.Request,) {
-	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson")
+	GetJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson")
 	PrintHeaderToServer(writer,request)
 	PrintEarthquakeInformation(writer)
 }
 
 // Print earthquake data to the server console
 func PrintEarthquakesToServerAllMonth(writer http.ResponseWriter, request *http.Request,) {
-	getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson")
+	GetJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson")
 	PrintHeaderToServer(writer,request)
 	PrintEarthquakeInformation(writer)
 }
