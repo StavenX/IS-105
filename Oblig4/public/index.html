@@ -132,7 +132,7 @@
 	}
 	</style>
 
-	<title>Maps</title>
+	<title>EQtracker</title>
 	<script>
 	if (!String.prototype.format) {
 		String.prototype.format = function() {
@@ -151,7 +151,7 @@
 	<div id="main">
 		<div class="viewer">
 			<div>
-				<div class="title">The Amazing Earthquake Site!</div>
+				<div class="title">Earthquake Map</div>
 				<div id="headerBox">
 					<div id="header"></div>
 					<center>
@@ -159,6 +159,11 @@
 						<input type="text" placeholder="Search.." id="searchBar"></input>
 						<button onclick="onSearch();">Search</button>
 						<br>
+						<button class="button button1 focus" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson');setfocus(this);">Significant - Month</button>
+						<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson');setfocus(this);">Significant - Week</button>
+						<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_day.geojson');setfocus(this);">Significant - Day</button>
+						<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_hour.geojson');setfocus(this);">Significant - Hour</button>
+
 						<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson');setfocus(this);">All - Hour</button>
 						<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson');setfocus(this);">All - Day</button>
 						<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson');setfocus(this);">All - Week</button>
@@ -166,10 +171,7 @@
 						<!-- All month button commented out, because it loads too much data; and crashes the website kind of
 							<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson');setfocus(this);">All - Month</button> -->
 
-						<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_hour.geojson');setfocus(this);">Significant - Hour</button>
-						<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_day.geojson');setfocus(this);">Significant - Day</button>
-						<button class="button button1" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson');setfocus(this);">Significant - Week</button>
-						<button class="button button1 focus" onclick="loadSpecificURL('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson');setfocus(this);">Significant - Month</button>
+						
 					</center>
 				</div>
 				<div id="entryBox"></div>
@@ -254,17 +256,21 @@
 						entry.properties.mag,
 						entry.properties.url
 					));
-			// Add the circle for this city to the map.
-			var entryCircle = new google.maps.Circle({
+
+			// If magnitude is actually significant, draws a circle on the area		
+			if (entry.properties.mag > 5) {
+				// Add the circle for this city to the map.
+				var entryCircle = new google.maps.Circle({
 				strokeColor: '#FF0000',
-				strokeOpacity: 0.8,
+				strokeOpacity: 0.2,
 				strokeWeight: 2,
 				fillColor: '#FF0000',
 				fillOpacity: 0.35,
 				map: map,
 				center: {lat: entry.geometry.coordinates[1], lng: entry.geometry.coordinates[0]},
-				radius: Math.pow(2, entry.properties.mag) / 2 * 10000
-            });
+				radius: Math.pow(2, entry.properties.mag) / 2 * 1000
+            	});
+			}			
 		}
 			makeEntryBox(data);
 	}
@@ -337,6 +343,14 @@
 					<p>Last Updated:	${new Date(entry.properties.updated).toUTCString()}</p>
 					<p>Coordinates: 	${entry.geometry.coordinates}</p>
 					<p>Timezone: 		${entry.properties.tz}</p>
+					<p>Felt: 			${entry.properties.felt}</p>
+					<p>CDI: 			${entry.properties.cdi}</p>
+					<p>MMI: 			${entry.properties.mmi}</p>
+					<p>Alert: 			${entry.properties.alert}</p>
+					<p>Status: 			${entry.properties.status}</p>
+					<p>Tsunami: 		${entry.properties.tsunami}</p>
+					<p>Significance: 	${entry.properties.sig}</p>s
+
 					<center>
 						<a href="${entry.properties.url}" target="_blank">Read more</a>
 						<button class="button button1" onclick="moveMapToLocation(${entry.geometry.coordinates[1]},${entry.geometry.coordinates[0]});">Show on map</button>

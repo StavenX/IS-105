@@ -121,9 +121,7 @@ func openServer() {
 
 	/* Handles every "/" request. Also works on other "/" that are not handled.*/
 	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("./public"))))
-	http.HandleFunc("/", printHello)
-	//http.HandleFunc("/map", test)
-	//http.HandleFunc("/smth/", smthHandler)
+	http.HandleFunc("/hello", printHello)
 
 	// Handler for the individual pages we have selected.
 	http.HandleFunc("/1", 	PrintEarthquakesToServerAllHOUR)
@@ -138,27 +136,6 @@ func openServer() {
 func printHello(writer http.ResponseWriter, request *http.Request) {
 	fmt.Fprint(writer, "Hello");
 }
-
-func test(writer http.ResponseWriter, request *http.Request) {
-	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("./public"))))
-}
-
-/*
-func smthHandler(w http.ResponseWriter, r *http.Request) {
-	if (r.URL.Path != "/") || (r.URL.Path != "/1") || (r.URL.Path != "/2") || (r.URL.Path != "/3") || (r.URL.Path != "/4") {
-		errorHandler(w, r, http.StatusNotFound)
-		return
-	}
-	fmt.Fprint(w, "Error")
-}
-
-func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
-	w.WriteHeader(status)
-	if status == http.StatusNotFound {
-		fmt.Fprint(w, "custom 404")
-	}
-}
-*/
 
 // Takes Unix time as parameter, and returns time in a readable format
 func getUnixAsReadable(_time int64) time.Time  {
@@ -194,17 +171,7 @@ func PrintHeaderToServer(writer http.ResponseWriter, request *http.Request) {
 	fmt.Fprintln(writer, "----------------------------------------------------------------")
 }
 
-// Prints the JSON header to the server console. Use for local printing
-func PrintHeaderToConsole() {
-	fmt.Println("Type: ", 		header.Type)
-	fmt.Println("Metadata for session -- ")
-	fmt.Println("Generated: ", 	header.Metadata.Generated)
-	fmt.Println("URL: ", 		header.Metadata.URL)
-	fmt.Println("Title: ", 		header.Metadata.Title)
-	fmt.Println("Status: ", 		header.Metadata.Status)
-	fmt.Println("API: ", 		header.Metadata.API)
-	fmt.Println("Count: ", 		header.Metadata.Count)
-}
+
 
 // Function to print individual information about an earthquake. Reduces code duplucation, and prevents
 // the need for writing many, long functions with the same data
@@ -244,6 +211,17 @@ func PrintEarthquakeInformation(writer http.ResponseWriter) {
 	}
 }
 
+/* Prints the JSON header to the server console. Use for local printing
+func PrintHeaderToConsole() {
+	fmt.Println("Type: ", 		header.Type)
+	fmt.Println("Metadata for session -- ")
+	fmt.Println("Generated: ", 	header.Metadata.Generated)
+	fmt.Println("URL: ", 		header.Metadata.URL)
+	fmt.Println("Title: ", 		header.Metadata.Title)
+	fmt.Println("Status: ", 		header.Metadata.Status)
+	fmt.Println("API: ", 		header.Metadata.API)
+	fmt.Println("Count: ", 		header.Metadata.Count)
+}
 // Prints earthquake data to local console
 func PrintEarthquakesToConsole() {
 
@@ -279,7 +257,7 @@ func PrintEarthquakesToConsole() {
 		fmt.Println("Type: ", 			d.Properties.Type)
 
 	}
-}
+}*/
 
 // Print earthquake data to the server console
 func PrintEarthquakesToServerAllHOUR(writer http.ResponseWriter, request *http.Request,) {
