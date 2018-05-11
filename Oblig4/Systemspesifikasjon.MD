@@ -7,7 +7,7 @@ Formålet med applikasjonen er å gi brukeren en enkel og intuitiv måte å finn
 
 
 Systemarkitektur
-Applikasjonen har en "single-page" web applikasjon arkitektur. Den lagrer eller oppdaterer ikke data automatisk, men henter alt gjennom en eneste innlasting. Det åpnes en lokal web server som lytter til port ":8080". Avhengig av hvilken sti som blir aksessert vil klienten hente JSON-basert data. JSON dataen blir hentet gjennom et API kall til en rekke av earthquake.usgs.gov sine API'er. Aplikasjonen oversetter deretter dataen til et leselig format og presenterer den i web serveren. 
+Applikasjonen har en "single-page" web applikasjon arkitektur. Den lagrer eller oppdaterer ikke data automatisk, men henter alt gjennom en eneste innlasting. I dette systemet blir datamaskinen som kjører programmet både server og klient. Server i den forstand at det åpnes en lokal web server som lytter til port ":8080" når applikasjonen blir kjørt. Datamaskinen er klient når den sender en forespørsel om websiden som inneholder informasjon prosessert av web serveren. Applikasjonen henter også JSON basert data gjennom et API kall til en rekke av earthquake.usgs.gov sine API'er. Dette kallet sender en forespørsel til en server i datasenteret Akamai Technologies og får returnert data.
 
 Ignore:
 http://www.fdsn.org/webservices/FDSN-WS-Specifications-1.0.pdf
