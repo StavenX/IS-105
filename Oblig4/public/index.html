@@ -105,7 +105,7 @@
 	.title {
 		text-align: center;
 		width : 100%;
-		background: #222;
+		background: #777;
 		color: white;
 		font-size: 40px;
 		padding: 0;
@@ -152,7 +152,7 @@
 		<div class="viewer">
 			<div>
 				<div class="title">The Amazing Earthquake Site!</div>
-				<div id="headerBox">	
+				<div id="headerBox">
 					<div id="header"></div>
 					<center>
 						<h4>Search earthquake data for: </h4>
@@ -306,7 +306,7 @@
 
 			htmlCode += `
 			<div>
-				<h3> Title: 		${data.metadata.title}</h3>
+				<h3> Title:    ${data.metadata.title}</h3>
 				<h3> Generated: 	${new Date(data.metadata.generated).toUTCString()}</h3>
 				<h3> Entries found: ${data.metadata.count}</h3>
 				<h3> API: 			${data.metadata.api}</h3>
